@@ -1,7 +1,13 @@
 name: Deploy GitHub Pages
 
 # Construit les PDF + la page web et publie sur GitHub Pages.
-# Prérequis (une seule fois) : Settings > Pages > Source = "GitHub Actions".
+#
+# PRÉREQUIS OBLIGATOIRE (une seule fois, à faire à la main) :
+#   Settings > Pages > Source = "GitHub Actions".
+# Le GITHUB_TOKEN du workflow n'a pas le droit de créer le site Pages
+# lui-même : sans cette activation manuelle, actions/configure-pages
+# échoue avec "Resource not accessible by integration". C'est pourquoi on
+# n'utilise pas l'option enablement (qui ne fonctionne pas avec ce token).
 on:
   push:
     branches: [main]
@@ -42,8 +48,6 @@ jobs:
 
       - name: Configurer Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true   # active Pages automatiquement si ce n'est pas déjà fait
 
       - name: Publier l'artefact
         uses: actions/upload-pages-artifact@v3
