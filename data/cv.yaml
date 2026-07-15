@@ -1,0 +1,347 @@
+# =============================================================================
+#  DOSSIER DE COMPÉTENCES — SOURCE UNIQUE DE VÉRITÉ (bilingue FR/EN)
+# =============================================================================
+#
+#  Ce fichier est la SEULE source à éditer. Tout le reste est généré :
+#    - le résumé du README                -> python scripts/gen_readme.py
+#    - les 4 PDF (design/classic x fr/en) -> python scripts/build.py
+#
+#  Convention bilingue :
+#    - Un champ traduisible s'écrit :   { fr: "texte", en: "text" }
+#    - Un champ neutre (date, techno, nom propre) s'écrit directement : "valeur"
+#
+#  Les dates sont au format "AAAA-MM" (ou "AAAA"). "present" = en cours.
+# =============================================================================
+
+meta:
+  updated: "2026-07-15"
+  default_lang: "fr"
+
+profile:
+  name: "Corentin Poisson"
+  title:
+    fr: "Product Manager — Digital & E-commerce"
+    en: "Product Manager — Digital & E-commerce"
+  email: "corentinpoisson44@gmail.com"
+  phone: ""                       # laissé vide volontairement ; à compléter si besoin
+  location:
+    fr: "Paris / Région parisienne, France"
+    en: "Paris area, France"
+  links:
+    - label: "LinkedIn"
+      url: "https://www.linkedin.com/in/corentin-poisson-15126711b/"
+    - label: "GitHub"
+      url: "https://github.com/corentinpoisson44-collab"
+  # Accroche à relire / ajuster.
+  summary:
+    fr: >-
+      Product Manager avec plus de 7 ans d'expérience dans le digital, j'ai
+      évolué du développement fullstack Java/JS vers le pilotage produit
+      (Scrum Master, Product Owner puis Product Manager). J'interviens
+      aujourd'hui au cœur de l'expérience e-commerce de chanel.com (division
+      Mode), sur des APIs et des architectures headless. J'allie une solide
+      culture technique à une vision produit orientée business, data et
+      delivery.
+    en: >-
+      Product Manager with 7+ years of experience in digital, I moved from
+      Java/JS fullstack development into product leadership (Scrum Master,
+      Product Owner, then Product Manager). I now operate at the heart of the
+      chanel.com e-commerce experience (Fashion division), on headless APIs
+      and architectures. I combine a strong technical background with a
+      business-, data- and delivery-oriented product vision.
+
+# -----------------------------------------------------------------------------
+#  COMPÉTENCES
+# -----------------------------------------------------------------------------
+skills:
+  - category: { fr: "Product Management & Agilité", en: "Product Management & Agile" }
+    items:
+      - { fr: "Vision & stratégie produit", en: "Product vision & strategy" }
+      - { fr: "Roadmap & priorisation", en: "Roadmap & prioritisation" }
+      - { fr: "Gestion de backlog", en: "Backlog management" }
+      - "User Story Mapping"
+      - "PI Planning (SAFe)"
+      - "Scrum / Kanban"
+      - { fr: "Facilitation & rétrospectives", en: "Facilitation & retrospectives" }
+      - "DoR / DoD"
+      - { fr: "Coaching Product Owner", en: "Product Owner coaching" }
+
+  - category: { fr: "Gestion de projet & delivery", en: "Project management & delivery" }
+    items:
+      - { fr: "Cadrage & étude de besoins", en: "Scoping & requirements analysis" }
+      - { fr: "Étude d'impact", en: "Impact analysis" }
+      - { fr: "Pilotage macro & capacités", en: "Macro & capacity planning" }
+      - { fr: "Delivery data-driven", en: "Data-driven delivery" }
+      - { fr: "Conduite du changement", en: "Change management" }
+      - { fr: "Relation client & parties prenantes", en: "Client & stakeholder management" }
+
+  - category: { fr: "Développement", en: "Development" }
+    items:
+      - "Java / Java EE (Spring Boot, Struts, Liferay)"
+      - "Python"
+      - "PHP (Laravel)"
+      - "JavaScript / TypeScript / React"
+      - "Oracle SQL / PL-SQL"
+      - { fr: "Architecture hexagonale · API REST · BFF", en: "Hexagonal architecture · REST API · BFF" }
+
+  - category: { fr: "Outils & méthodes", en: "Tools & methods" }
+    items:
+      - "JIRA · Confluence · Trello"
+      - "Klaxoon · Draft.io"
+      - "Kibana · Splunk"
+      - "Git · GitLab · Jenkins · SonarQube"
+      - "JUnit · Mockito · Katalon · Robot Framework"
+      - "Suite Office · Postman"
+
+  - category: { fr: "Secteurs d'activité", en: "Industries" }
+    items:
+      - { fr: "Luxe & e-commerce", en: "Luxury & e-commerce" }
+      - { fr: "Banque & crédit", en: "Banking & credit" }
+      - { fr: "Gestion d'actifs", en: "Asset management" }
+      - { fr: "Finances publiques", en: "Public finance" }
+
+# -----------------------------------------------------------------------------
+#  EXPÉRIENCES / MISSIONS (ordre anté-chronologique)
+# -----------------------------------------------------------------------------
+experiences:
+  # --- CHANEL — Product Manager ----------------------------------------------
+  - company: "CHANEL"
+    role: { fr: "Product Manager", en: "Product Manager" }
+    location: { fr: "Paris, France · sur site", en: "Paris, France · on-site" }
+    start: "2025-10"
+    end: "present"
+    context:
+      fr: "Pilotage des produits Façade, BFF Web et BFF App, au cœur de l'expérience digitale de chanel.com (division Mode)."
+      en: "Ownership of the Façade, BFF Web and BFF App products, at the heart of the chanel.com digital experience (Fashion division)."
+    missions:
+      - { fr: "Définition de la vision produit et de la roadmap globale, en équilibrant priorités business et contraintes techniques.",
+          en: "Defined the product vision and overall roadmap, balancing business priorities and technical constraints." }
+      - { fr: "Pilotage de 2 Product Owners techniques et d'une équipe de 6 devs/QA autour d'une roadmap unifiée et data-driven.",
+          en: "Led 2 technical Product Owners and a team of 6 devs/QA around a unified, data-driven roadmap." }
+      - { fr: "Mise en place d'un pilotage macro agile pour anticiper les capacités et aligner les parties prenantes sur les échéances.",
+          en: "Set up agile macro planning to anticipate capacity and align stakeholders on deadlines." }
+      - { fr: "Conception d'un dashboard Kibana complet : health state, business data, cache management et reliability.",
+          en: "Built a complete Kibana dashboard: health state, business data, cache management and reliability." }
+      - { fr: "Développement d'une surcouche de pilotage de roadmap sur JIRA : progression des Epics, projection des dates d'atterrissage par la vélocité, statut On Track / At Risk / Off Track.",
+          en: "Developed a roadmap-steering layer on top of JIRA: Epic progress, velocity-based landing-date projection, On Track / At Risk / Off Track status." }
+      - { fr: "Structuration du cadre de delivery sur JIRA : taxonomie de statuts, automatisations, outillage de qualification (DoR, arbres de triage de bugs, grille de macro-sizing).",
+          en: "Structured the delivery framework on JIRA: status taxonomy, automations, qualification tooling (DoR, bug-triage decision trees, macro-sizing grid)." }
+      - { fr: "Interface clé entre tech, POs et business pour la cohérence produit des APIs et le planning cross-plateforme (web & app).",
+          en: "Key interface between tech, POs and business to ensure API product consistency and cross-platform planning (web & app)." }
+    achievements: []
+    stack:
+      - "JIRA"
+      - "Kibana"
+      - "BFF"
+      - "REST API"
+      - "Agile / SAFe"
+
+  # --- CHANEL — Product Owner ------------------------------------------------
+  - company: "CHANEL"
+    role: { fr: "Product Owner technique", en: "Technical Product Owner" }
+    location: { fr: "Paris, France · hybride", en: "Paris, France · hybrid" }
+    start: "2023-11"
+    end: "2025-10"
+    context:
+      fr: "PO technique de l'API Façade, pivot de la refonte headless du site chanel.com (division Mode)."
+      en: "Technical PO of the Façade API, cornerstone of the headless rebuild of chanel.com (Fashion division)."
+    missions:
+      - { fr: "Gestion complète du backlog produit : définition des besoins, priorisation et suivi des livrables en Scrum bi-hebdomadaire.",
+          en: "Full product backlog management: requirements definition, prioritisation and delivery tracking in bi-weekly Scrum." }
+      - { fr: "Collaboration avec 5 devs/QA pour livrer une migration headless réussie et une réduction notable du temps de chargement.",
+          en: "Worked with 5 devs/QA to deliver a successful headless migration and a significant load-time reduction." }
+      - { fr: "Optimisation du cache et standardisation des composants JSON, facilitant la contribution des pages dans un CMS AEM.",
+          en: "Optimised caching and standardised JSON components, easing page authoring in an AEM CMS." }
+      - { fr: "Implication dans le RUN et traitement proactif des anomalies de production.",
+          en: "Involved in RUN activities and proactive handling of production incidents." }
+      - { fr: "Développement d'un outil interne de test et debug des pages front-end, améliorant l'efficacité des QA et la qualité des livraisons.",
+          en: "Built an internal tool to test and debug front-end pages, improving QA efficiency and delivery quality." }
+    achievements: []
+    stack:
+      - "API Façade"
+      - "AEM"
+      - "JSON"
+      - "Headless"
+      - "Scrum"
+
+  # --- MATCHEM — Product Owner Web / Data ------------------------------------
+  - company: "MATCHEM"
+    role: { fr: "Product Owner Web / Data", en: "Web / Data Product Owner" }
+    location: { fr: "Paris, France · hybride", en: "Paris, France · hybrid" }
+    start: "2022-09"
+    end: "2023-11"
+    context:
+      fr: "Product Owner Web & Data sur une plateforme grand public."
+      en: "Web & Data Product Owner on a consumer-facing platform."
+    missions:
+      - { fr: "Définition de la vision produit et gestion du Product Backlog (création des tickets, priorisation, valeur business).",
+          en: "Defined the product vision and managed the Product Backlog (ticket creation, prioritisation, business value)." }
+      - { fr: "Rédaction des User Stories et priorisation des fonctionnalités.",
+          en: "Wrote User Stories and prioritised features." }
+      - { fr: "Collaboration avec les équipes de développement et l'équipe UX/UI (wireframes, maquettes).",
+          en: "Collaborated with development teams and the UX/UI team (wireframes, mockups)." }
+      - { fr: "SEO et contrôle des Core Web Vitals.",
+          en: "SEO and Core Web Vitals monitoring." }
+      - { fr: "Validation des livrables et recette fonctionnelle ; animation d'ateliers et amélioration continue via rétrospectives.",
+          en: "Deliverable validation and functional acceptance testing; workshop facilitation and continuous improvement through retrospectives." }
+    achievements: []
+    stack:
+      - "React"
+      - "Core Web Vitals"
+      - "SEO"
+      - "UX/UI"
+      - "Scrum"
+
+  # --- DGFiP — Scrum Master --------------------------------------------------
+  - company: "DGFiP (Direction Générale des Finances Publiques)"
+    role: { fr: "Scrum Master", en: "Scrum Master" }
+    location: { fr: "Nantes, France", en: "Nantes, France" }
+    start: "2022-03"
+    end: "2022-09"
+    context:
+      fr: "Transformation SAFe de la DGFiP : refonte et fusion des applications de gestion des redevables (Amendes Transports, Radar, Impôts). Squad de fiabilisation des données redevables (batchs)."
+      en: "SAFe transformation at the DGFiP: rebuilding and merging debtor-management applications (transport fines, speed cameras, taxes). Squad focused on debtor-data reliability (batch jobs)."
+    missions:
+      - { fr: "Scrum Master d'une squad de développement de batchs Java/Spring dédiée à la fiabilisation des données redevables.",
+          en: "Scrum Master of a Java/Spring batch-development squad dedicated to debtor-data reliability." }
+      - { fr: "Mise en place de cérémonies et d'ateliers (Klaxoon), rétrospectives variées, DoR/DoD et timeboxing.",
+          en: "Set up ceremonies and workshops (Klaxoon), varied retrospectives, DoR/DoD and timeboxing." }
+      - { fr: "Aide à la priorisation via Extreme Quotation ; coaching du Product Owner (User Stories INVEST, Gherkin).",
+          en: "Supported prioritisation via Extreme Quotation; coached the Product Owner (INVEST User Stories, Gherkin)." }
+      - { fr: "Diffusion de la culture Agile du privé vers les équipes publiques (formation à JIRA, découpage des besoins).",
+          en: "Brought private-sector Agile culture to public teams (JIRA training, requirement slicing)." }
+    achievements: []
+    stack:
+      - "Spring Batch"
+      - "Java"
+      - "Robot Framework"
+      - "JIRA / Confluence"
+      - "SAFe"
+
+  # --- BNP Paribas Personal Finance — Dev -> SM -> PO ------------------------
+  - company: "BNP Paribas Personal Finance"
+    role: { fr: "Développeur → Scrum Master → Product Owner", en: "Developer → Scrum Master → Product Owner" }
+    location: { fr: "Nantes, France", en: "Nantes, France" }
+    start: "2019-01"
+    end: "2022-03"
+    context:
+      fr: "Filiale crédit à la consommation du groupe BNP Paribas. Intégré comme développeur au sein de la DSI PF, évolution rapide vers Scrum Master puis Product Owner, dans un contexte de transformation vers l'agilité à l'échelle (SAFe)."
+      en: "Consumer-credit subsidiary of the BNP Paribas group. Joined as a developer within the PF IT department, quickly growing into Scrum Master then Product Owner, amid a scaled-agile transformation (SAFe)."
+    missions:
+      - { fr: "Product Owner : gestion de backlog, User Story Mapping, roadmap et stratégie produit, PI Planning, échanges en anglais avec des équipes européennes — projet d'innovation européen de standardisation des APIs de souscription crédit (architecture hexagonale, Spring Boot).",
+          en: "Product Owner: backlog management, User Story Mapping, roadmap and product strategy, PI Planning, English-speaking work with European teams — European innovation project standardising credit-subscription APIs (hexagonal architecture, Spring Boot)." }
+      - { fr: "Scrum Master : cérémonies, coaching, mise en place d'une communauté Agile inter-équipes, rôle de proxy PO — refonte du parcours web de souscription magasin en React (équipe de 8), livrée en production.",
+          en: "Scrum Master: ceremonies, coaching, cross-team Agile community, proxy PO role — rebuild of the in-store web subscription journey in React (team of 8), delivered to production." }
+      - { fr: "Développement : projets Java EE (Struts, Liferay DXP), PHP/Oracle ; amélioration du circuit CI/CD (Gitflow, Jenkins) ; résolution d'incidents en Kanban.",
+          en: "Development: Java EE projects (Struts, Liferay DXP), PHP/Oracle; CI/CD pipeline improvement (Gitflow, Jenkins); incident resolution in Kanban." }
+      - { fr: "Portail CMS Java EE Liferay et application de gestion des primes concessionnaires livrés en production.",
+          en: "Java EE Liferay CMS portal and dealer-bonus management application delivered to production." }
+    achievements:
+      - { fr: "Sécurisation d'une mise en production critique (souscription crédit) en recentrant les User Stories sur la qualité et en basculant l'équipe en Kanban.",
+          en: "Secured a critical production release (credit subscription) by refocusing User Stories on quality and switching the team to Kanban." }
+    stack:
+      - "Java / Spring Boot"
+      - "React"
+      - "PHP / Oracle PL-SQL"
+      - "Liferay DXP"
+      - "Mapstruct / OpenAPI"
+      - "Jenkins / Gitflow"
+
+  # --- WIZZLABS — Développeur PHP (stage) ------------------------------------
+  - company: "WIZZLABS"
+    role: { fr: "Développeur PHP (stage)", en: "PHP Developer (internship)" }
+    location: { fr: "Tunis, Tunisie", en: "Tunis, Tunisia" }
+    start: "2018-06"
+    end: "2018-09"
+    context:
+      fr: "Stage à l'étranger au sein du service R&D d'une ESN spécialisée en digital marketing (clients dont Microsoft Tunisie)."
+      en: "Internship abroad within the R&D team of a digital-marketing IT services company (clients including Microsoft Tunisia)."
+    missions:
+      - { fr: "Développement from scratch d'une API REST (PHP 7, Laravel 5.6) communiquant avec un serveur OpenLDAP : CRUD utilisateurs et habilitations par rôles.",
+          en: "Built a REST API from scratch (PHP 7, Laravel 5.6) communicating with an OpenLDAP server: user CRUD and role-based permissions." }
+      - { fr: "Documentation complète de l'API et tests via Postman.",
+          en: "Complete API documentation and testing via Postman." }
+    achievements: []
+    stack:
+      - "Laravel 5.6"
+      - "PHP 7"
+      - "Linux"
+      - "OpenLDAP"
+      - "Postman"
+
+  # --- CACEIS (Crédit Agricole) — Apprenti ingénieur -------------------------
+  - company: "CACEIS (Crédit Agricole)"
+    role: { fr: "Apprenti ingénieur — Développeur Full Stack Java EE", en: "Engineering apprentice — Full Stack Java EE Developer" }
+    location: { fr: "France", en: "France" }
+    start: "2016-09"
+    end: "2018-06"
+    context:
+      fr: "Filiale du Crédit Agricole (administration de fonds, gestion de titres). DSI dédiée aux services aux émetteurs (registres nominatifs d'actionnaires). Projets JEE à forte volumétrie (centaines de milliers de connexions/an)."
+      en: "Crédit Agricole subsidiary (fund administration, securities services). IT department dedicated to issuer services (registered-shareholder registries). High-volume JEE projects (hundreds of thousands of connections/year)."
+    missions:
+      - { fr: "Développement Java EE / Struts 2 : refonte de process de connexion, formulaires, génération de documents PDF (Freemarker, patterns Factory/Decorator).",
+          en: "Java EE / Struts 2 development: login-process rebuild, forms, PDF document generation (Freemarker, Factory/Decorator patterns)." }
+      - { fr: "Batch Java de planification d'édition de reportings et système d'alerte.",
+          en: "Java batch for scheduling report generation, and an alerting system." }
+      - { fr: "Résolution de failles de sécurité (injection SQL, clickjacking) suite à un pentest ; filtre servlet anti-frame.",
+          en: "Fixed security vulnerabilities (SQL injection, clickjacking) following a pentest; anti-frame servlet filter." }
+      - { fr: "Système de gestion des utilisateurs et habilitations (Struts 2, Hibernate, Oracle PL/SQL) ; routes de webservice mobile (API REST, JWT, Spring).",
+          en: "User and permission management system (Struts 2, Hibernate, Oracle PL/SQL); mobile webservice routes (REST API, JWT, Spring)." }
+    achievements: []
+    stack:
+      - "Java EE"
+      - "Struts 2"
+      - "Oracle SQL / PL-SQL"
+      - "Hibernate"
+      - "Freemarker"
+      - "Maven / Tomcat"
+
+# -----------------------------------------------------------------------------
+#  FORMATION
+# -----------------------------------------------------------------------------
+education:
+  - school: "Polytech Paris-Sud (Paris-Saclay), Gif-sur-Yvette"
+    degree: { fr: "Diplôme d'ingénieur en informatique (par apprentissage)", en: "Engineering degree in Computer Science (apprenticeship)" }
+    field: { fr: "Programmation, gestion de projet, systèmes embarqués, architecture", en: "Programming, project management, embedded systems, architecture" }
+    location: { fr: "Gif-sur-Yvette, France", en: "Gif-sur-Yvette, France" }
+    start: "2016"
+    end: "2018"
+  - school: "IUT d'Orsay"
+    degree: { fr: "DUT Informatique (année spéciale)", en: "Two-year technical degree in Computer Science (fast track)" }
+    field: { fr: "", en: "" }
+    location: { fr: "Orsay, France", en: "Orsay, France" }
+    start: "2015"
+    end: "2016"
+  - school: "Lycée Nicolas Appert, Orvault"
+    degree: { fr: "BTS IRIS — Informatique et Réseaux pour l'Industrie et les Services", en: "BTS IRIS — Computing & Networks for Industry and Services" }
+    field: { fr: "Développement & réseaux", en: "Development & networks" }
+    location: { fr: "Orvault, France", en: "Orvault, France" }
+    start: "2013"
+    end: "2015"
+
+# -----------------------------------------------------------------------------
+#  CERTIFICATIONS (aucune pour le moment)
+# -----------------------------------------------------------------------------
+certifications: []
+
+# -----------------------------------------------------------------------------
+#  LANGUES
+# -----------------------------------------------------------------------------
+languages:
+  - name: { fr: "Français", en: "French" }
+    level: { fr: "Langue maternelle", en: "Native" }
+  - name: { fr: "Anglais", en: "English" }
+    level: { fr: "Courant — professionnel (lu, écrit, parlé)", en: "Fluent — professional (read, written, spoken)" }
+  - name: { fr: "Espagnol", en: "Spanish" }
+    level: { fr: "Notions", en: "Basic" }
+
+# -----------------------------------------------------------------------------
+#  CENTRES D'INTÉRÊT
+# -----------------------------------------------------------------------------
+interests:
+  - { fr: "Organisation de festivals (président de l'association Kancane)", en: "Festival organising (president of the Kancane association)" }
+  - { fr: "Musique — passionné de Hi-Fi & Home Cinéma", en: "Music — Hi-Fi & Home Cinema enthusiast" }
+  - { fr: "Cinéma", en: "Cinema" }
+  - { fr: "Lecture de méthodes (Agile, communication, management)", en: "Reading on methods (Agile, communication, management)" }
+  - { fr: "Veille technologique", en: "Technology watch" }
+  - { fr: "Sport (musculation, vélo)", en: "Sport (weight training, cycling)" }

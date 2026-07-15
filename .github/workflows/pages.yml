@@ -1,0 +1,62 @@
+name: Deploy GitHub Pages
+
+# Construit les PDF + la page web et publie sur GitHub Pages.
+# Prérequis (une seule fois) : Settings > Pages > Source = "GitHub Actions".
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/**"
+      - "typst/**"
+      - "scripts/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Un seul déploiement à la fois.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Installer les dépendances
+        run: pip install typst pyyaml
+
+      - name: Générer les PDF et le site
+        run: |
+          python scripts/build.py
+          python scripts/gen_site.py
+
+      - name: Configurer Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true   # active Pages automatiquement si ce n'est pas déjà fait
+
+      - name: Publier l'artefact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Déployer sur Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

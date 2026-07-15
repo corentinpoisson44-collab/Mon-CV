@@ -1,0 +1,41 @@
+name: Build CV
+
+# Recompile le résumé README et les PDF à chaque push touchant le contenu.
+on:
+  push:
+    paths:
+      - "data/**"
+      - "typst/**"
+      - "scripts/**"
+      - ".github/workflows/build.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Installer les dépendances
+        run: pip install typst pyyaml
+
+      - name: Vérifier que le README est à jour
+        run: |
+          python scripts/gen_readme.py
+          if ! git diff --quiet README.md; then
+            echo "::warning::README.md n'est pas à jour. Lancez 'python scripts/gen_readme.py' et committez."
+          fi
+
+      - name: Compiler les PDF
+        run: python scripts/build.py
+
+      - name: Publier les PDF en artefacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv-pdf
+          path: build/*.pdf
+          if-no-files-found: error
