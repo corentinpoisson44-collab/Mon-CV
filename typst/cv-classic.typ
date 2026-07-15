@@ -75,6 +75,7 @@
   block(breakable: false, width: 100%, {
     grid(
       columns: (1fr, auto),
+      column-gutter: 0.8em,
       align: (left, right),
       text(weight: "bold", tr(exp.role) + " — " + exp.company),
       text(9.5pt, daterange(exp.start, exp.end)),
@@ -111,10 +112,12 @@
 #if data.at("education", default: ()).len() > 0 {
   section(L.education)
   for ed in data.education {
+    let field = tr(ed.at("field", default: ""))
     grid(
       columns: (1fr, auto),
+      column-gutter: 0.8em,
       align: (left, right),
-      [#text(weight: "bold", tr(ed.degree))#if ed.at("field", default: none) != none [ — #tr(ed.field)], #ed.school#if ed.at("location", default: none) != none [ (#tr(ed.location))]],
+      [#text(weight: "bold", tr(ed.degree))#if field != "" [ — #field], #ed.school#if ed.at("location", default: none) != none [ (#tr(ed.location))]],
       text(9.5pt, daterange(ed.start, ed.at("end", default: ""))),
     )
     v(0.2em)
@@ -141,4 +144,12 @@
     grid(columns: (1em, 1fr), "•",
       [#text(weight: "bold", tr(lg.name)) : #tr(lg.level)])
   }
+}
+
+// =============================================================================
+//  CENTRES D'INTÉRÊT
+// =============================================================================
+#if data.at("interests", default: ()).len() > 0 {
+  section(L.interests)
+  block(data.interests.map(it => tr(it)).join("  ·  "))
 }

@@ -124,7 +124,8 @@
   block(breakable: false, width: 100%, {
     grid(
       columns: (1fr, auto),
-      align: (left, right),
+      column-gutter: 0.8em,
+      align: (left + horizon, right + horizon),
       [
         #text(10.5pt, weight: "bold", tr(exp.role)) — #text(10.5pt, fill: accent, exp.company)
       ],
@@ -147,7 +148,7 @@
       v(0.2em)
       text(8.8pt, weight: "bold", fill: accent, L.achievements + " : ")
       for a in achs {
-        grid(columns: (0.9em, 1fr), text(fill: accent, "→"), tr(a))
+        grid(columns: (0.9em, 1fr), column-gutter: 0.3em, text(fill: accent, "→"), tr(a))
       }
     }
     let st = exp.at("stack", default: ())
@@ -166,11 +167,13 @@
 #if data.at("education", default: ()).len() > 0 {
   section(L.education)
   for ed in data.education {
+    let field = tr(ed.at("field", default: ""))
     grid(
       columns: (1fr, auto),
+      column-gutter: 0.8em,
       align: (left, right),
       [
-        #text(weight: "bold", tr(ed.degree))#if ed.at("field", default: none) != none [ — #tr(ed.field)] \
+        #text(weight: "bold", tr(ed.degree))#if field != "" [ — #field] \
         #text(9pt, fill: muted, ed.school)#if ed.at("location", default: none) != none [ · #tr(ed.location)]
       ],
       text(8.5pt, fill: muted, daterange(ed.start, ed.at("end", default: ""))),
@@ -201,4 +204,18 @@
       ]
     ],
   )
+}
+
+// =============================================================================
+//  CENTRES D'INTÉRÊT
+// =============================================================================
+#let interests = data.at("interests", default: ())
+#if interests.len() > 0 {
+  section(L.interests)
+  box(width: 100%, {
+    for it in interests {
+      chip(tr(it))
+      h(0.35em)
+    }
+  })
 }

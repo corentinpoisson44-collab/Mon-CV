@@ -29,12 +29,14 @@ LABELS = {
     "fr": {
         "skills": "Compétences", "experience": "Expériences",
         "education": "Formation", "languages": "Langues",
+        "interests": "Centres d'intérêt",
         "present": "aujourd'hui", "updated": "Mis à jour le",
         "contact": "Contact",
     },
     "en": {
         "skills": "Skills", "experience": "Experience",
         "education": "Education", "languages": "Languages",
+        "interests": "Interests",
         "present": "present", "updated": "Updated on",
         "contact": "Contact",
     },
@@ -138,6 +140,13 @@ def build_summary(data: dict, lang: str) -> str:
         out.append("")
         for lg in data["languages"]:
             out.append(f"- **{tr(lg['name'], lang)}** : {tr(lg['level'], lang)}")
+        out.append("")
+
+    # Centres d'intérêt
+    if data.get("interests"):
+        out.append(f"## {lb['interests']}")
+        out.append("")
+        out.append(" · ".join(tr(it, lang) for it in data["interests"]))
         out.append("")
 
     out.append(f"*{lb['updated']} {data['meta']['updated']}.*")
