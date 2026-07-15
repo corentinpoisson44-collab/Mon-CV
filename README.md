@@ -12,7 +12,7 @@ Product Manager avec plus de 7 ans d'expérience dans le digital, j'ai évolué 
 - **Product Management & Agilité** : Vision & stratégie produit, Roadmap & priorisation, Gestion de backlog, User Story Mapping, PI Planning (SAFe), Scrum / Kanban, Facilitation & rétrospectives, DoR / DoD, Coaching Product Owner
 - **Gestion de projet & delivery** : Cadrage & étude de besoins, Étude d'impact, Pilotage macro & capacités, Delivery data-driven, Conduite du changement, Relation client & parties prenantes
 - **Développement** : Java / Java EE (Spring Boot, Struts, Liferay), Python, PHP (Laravel), JavaScript / TypeScript / React, Oracle SQL / PL-SQL, Architecture hexagonale · API REST · BFF
-- **Outils & méthodes** : JIRA · Confluence · Trello, Klaxoon · Draft.io, Kibana · Splunk, Git · GitLab · Jenkins · SonarQube, JUnit · Mockito · Katalon · Robot Framework, Suite Office · Postman
+- **Outils & méthodes** : JIRA · Confluence · Trello, Klaxoon · Draft.io, Kibana · Splunk · Dynatrace, Git · GitLab · Jenkins · SonarQube · Azure DevOps, AEM (Adobe Experience Manager), JUnit · Mockito · Katalon · Robot Framework, Suite Office · Postman
 - **Secteurs d'activité** : Luxe & e-commerce, Banque & crédit, Gestion d'actifs, Finances publiques
 
 ## Expériences

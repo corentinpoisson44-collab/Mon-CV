@@ -88,8 +88,9 @@ skills:
     items:
       - "JIRA · Confluence · Trello"
       - "Klaxoon · Draft.io"
-      - "Kibana · Splunk"
-      - "Git · GitLab · Jenkins · SonarQube"
+      - "Kibana · Splunk · Dynatrace"
+      - "Git · GitLab · Jenkins · SonarQube · Azure DevOps"
+      - "AEM (Adobe Experience Manager)"
       - "JUnit · Mockito · Katalon · Robot Framework"
       - "Suite Office · Postman"
 
