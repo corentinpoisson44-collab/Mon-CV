@@ -1,6 +1,9 @@
 # PDF de sortie (régénérables via `python scripts/build.py`)
 /build/*.pdf
 
+# Site généré (régénérable via `python scripts/gen_site.py`)
+/site/
+
 # Python
 __pycache__/
 *.pyc

@@ -136,6 +136,7 @@ d'où sont dérivés automatiquement :
 | **Résumé README** | La fiche ci-dessus | `python scripts/gen_readme.py` |
 | **PDF design** | Rendu soigné, couleur d'accent | `python scripts/build.py --theme design` |
 | **PDF classique** | Sobre et neutre, réadaptable par un cabinet de conseil | `python scripts/build.py --theme classic` |
+| **Site web** | Page bilingue (bascule FR/EN) + téléchargement des PDF, publiée sur GitHub Pages | `python scripts/gen_site.py` |
 
 Chaque PDF est généré en **français et en anglais** (`--lang fr` / `--lang en`).
 
@@ -187,3 +188,20 @@ start: "2023-01"        # format AAAA-MM ; "present" = en cours
 Après chaque modification, relancer `gen_readme.py` et `build.py`. Un
 [workflow GitHub Actions](.github/workflows/build.yml) recompile aussi les PDF
 à chaque push et les publie en artefacts.
+
+### Site web (GitHub Pages)
+
+Une page web bilingue est générée par [`scripts/gen_site.py`](scripts/gen_site.py)
+et déployée automatiquement par [`.github/workflows/pages.yml`](.github/workflows/pages.yml)
+à chaque push sur `main`.
+
+**Activation (une seule fois)** : dans **Settings → Pages**, choisir
+**Source : GitHub Actions**. L'URL publique sera de la forme
+`https://corentinpoisson44-collab.github.io/mon-cv/`.
+
+Aperçu en local :
+
+```bash
+python scripts/build.py && python scripts/gen_site.py
+python -m http.server -d site 8000   # puis ouvrir http://localhost:8000
+```
