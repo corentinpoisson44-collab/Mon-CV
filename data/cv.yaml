@@ -1,0 +1,137 @@
+# =============================================================================
+#  DOSSIER DE COMPÉTENCES — SOURCE UNIQUE DE VÉRITÉ (bilingue FR/EN)
+# =============================================================================
+#
+#  Ce fichier est la SEULE source à éditer. Tout le reste est généré :
+#    - le résumé du README            -> python scripts/gen_readme.py
+#    - les 4 PDF (design/classic x fr/en) -> python scripts/build.py
+#
+#  Convention bilingue :
+#    - Un champ traduisible s'écrit :   { fr: "texte", en: "text" }
+#    - Un champ neutre (date, techno, nom propre) s'écrit directement : "valeur"
+#
+#  Les dates sont au format "AAAA-MM" (ou "AAAA"). "present" = en cours.
+#
+#  >>> Le contenu ci-dessous est un EXEMPLE structurel à REMPLACER. <<<
+# =============================================================================
+
+meta:
+  updated: "2026-07-15"          # date de dernière mise à jour (AAAA-MM-JJ)
+  # Langue par défaut si non précisée à la compilation.
+  default_lang: "fr"
+
+profile:
+  name: "Corentin Poisson"
+  title:
+    fr: "Consultant — [intitulé de poste à préciser]"
+    en: "Consultant — [job title to specify]"
+  email: "corentinpoisson44@gmail.com"
+  phone: ""                       # optionnel, laisser vide pour masquer
+  location:
+    fr: "France"
+    en: "France"
+  links:
+    - label: "LinkedIn"
+      url: "https://www.linkedin.com/in/…"
+    - label: "GitHub"
+      url: "https://github.com/corentinpoisson44-collab"
+  # Accroche : 2-4 phrases. Le cœur de la première page.
+  summary:
+    fr: >-
+      EXEMPLE — Consultant avec X années d'expérience sur [domaine].
+      Spécialisé en [expertise clé], j'accompagne mes clients de la
+      [phase amont] jusqu'à la [phase aval]. À remplacer par votre pitch réel.
+    en: >-
+      EXAMPLE — Consultant with X years of experience in [domain].
+      Specialised in [key expertise], I support clients from [upstream phase]
+      through to [downstream phase]. Replace with your real pitch.
+
+# -----------------------------------------------------------------------------
+#  COMPÉTENCES — regroupées par catégorie.
+#  `items` = liste plate de mots-clés (neutres, non traduits en général).
+# -----------------------------------------------------------------------------
+skills:
+  - category: { fr: "Compétences métier", en: "Business skills" }
+    items:
+      - { fr: "Cadrage de projet", en: "Project scoping" }
+      - { fr: "Recueil du besoin", en: "Requirements gathering" }
+      - { fr: "Conduite du changement", en: "Change management" }
+  - category: { fr: "Compétences techniques", en: "Technical skills" }
+    items:
+      - "Python"
+      - "SQL"
+      - "Docker"
+      - "CI/CD"
+  - category: { fr: "Méthodologies", en: "Methodologies" }
+    items:
+      - "Agile / Scrum"
+      - "Kanban"
+      - { fr: "Gestion de projet", en: "Project management" }
+
+# -----------------------------------------------------------------------------
+#  EXPÉRIENCES / MISSIONS
+# -----------------------------------------------------------------------------
+experiences:
+  - company: "[Client / Employeur]"
+    role: { fr: "Consultant [rôle]", en: "[Role] Consultant" }
+    location: { fr: "Ville, France", en: "City, France" }
+    start: "2023-01"
+    end: "present"
+    context:
+      fr: "EXEMPLE — Contexte de la mission : secteur, enjeu, taille d'équipe."
+      en: "EXAMPLE — Assignment context: sector, stake, team size."
+    missions:
+      - { fr: "Réalisation de [livrable / action] ayant permis [résultat].",
+          en: "Delivered [deliverable / action] enabling [outcome]." }
+      - { fr: "Pilotage de [périmètre] auprès de [parties prenantes].",
+          en: "Led [scope] with [stakeholders]." }
+    achievements:
+      - { fr: "[Résultat chiffré : -30 % de délai, +X k€, etc.]",
+          en: "[Quantified result: -30% lead time, +X k€, etc.]" }
+    stack:
+      - "Python"
+      - "PostgreSQL"
+      - "Airflow"
+
+  - company: "[Client / Employeur précédent]"
+    role: { fr: "Consultant junior", en: "Junior Consultant" }
+    location: { fr: "Ville, France", en: "City, France" }
+    start: "2021-09"
+    end: "2022-12"
+    context:
+      fr: "EXEMPLE — Deuxième expérience à remplacer."
+      en: "EXAMPLE — Second experience to replace."
+    missions:
+      - { fr: "Description d'une mission clé.", en: "Key assignment description." }
+    achievements: []
+    stack:
+      - "Excel"
+      - "Power BI"
+
+# -----------------------------------------------------------------------------
+#  FORMATION
+# -----------------------------------------------------------------------------
+education:
+  - school: "[École / Université]"
+    degree: { fr: "Diplôme (ex. Master)", en: "Degree (e.g. Master's)" }
+    field: { fr: "Spécialité", en: "Major" }
+    location: { fr: "Ville, France", en: "City, France" }
+    start: "2018"
+    end: "2021"
+
+# -----------------------------------------------------------------------------
+#  CERTIFICATIONS
+# -----------------------------------------------------------------------------
+certifications:
+  - name: "[Nom de la certification]"
+    issuer: "[Organisme]"
+    year: "2024"
+
+# -----------------------------------------------------------------------------
+#  LANGUES
+# -----------------------------------------------------------------------------
+languages:
+  - name: { fr: "Français", en: "French" }
+    level: { fr: "Langue maternelle", en: "Native" }
+  - name: { fr: "Anglais", en: "English" }
+    level: { fr: "Courant (C1)", en: "Fluent (C1)" }

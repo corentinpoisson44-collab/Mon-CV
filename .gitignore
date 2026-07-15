@@ -1,0 +1,15 @@
+# PDF de sortie (régénérables via `python scripts/build.py`)
+/build/*.pdf
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS / éditeurs
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
