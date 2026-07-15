@@ -3,7 +3,7 @@
 
 **Product Manager — Digital & E-commerce**
 
-Product Manager avec plus de 7 ans d'expérience dans le digital, j'ai évolué du développement fullstack Java/JS vers le pilotage produit (Scrum Master, Product Owner puis Product Manager). J'interviens aujourd'hui au cœur de l'expérience digitale (division Mode), sur des APIs et des architectures headless. J'allie une solide culture technique à une vision produit orientée business, data et delivery.
+Product Manager avec plus de 7 ans d'expérience dans le digital, j'ai évolué du développement fullstack Java/JS vers le pilotage produit (Scrum Master, Product Owner puis Product Manager). J'interviens aujourd'hui au cœur de l'expérience digitale du site Chanel.com (division Mode), sur des APIs et des architectures headless. J'allie une solide culture technique à une vision produit orientée business, data et delivery.
 
 ✉️ corentinpoisson44@gmail.com · 📍 Paris / Région parisienne, France · [LinkedIn](https://www.linkedin.com/in/corentin-poisson-15126711b/) · [GitHub](https://github.com/corentinpoisson44-collab)
 
