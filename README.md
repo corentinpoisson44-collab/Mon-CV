@@ -3,7 +3,7 @@
 
 **Product Manager — Digital & E-commerce**
 
-Product Manager avec plus de 7 ans d'expérience dans le digital, j'ai évolué du développement fullstack Java/JS vers le pilotage produit (Scrum Master, Product Owner puis Product Manager). J'interviens aujourd'hui au cœur de l'expérience e-commerce de chanel.com (division Mode), sur des APIs et des architectures headless. J'allie une solide culture technique à une vision produit orientée business, data et delivery.
+Product Manager avec plus de 7 ans d'expérience dans le digital, j'ai évolué du développement fullstack Java/JS vers le pilotage produit (Scrum Master, Product Owner puis Product Manager). J'interviens aujourd'hui au cœur de l'expérience digitale (division Mode), sur des APIs et des architectures headless. J'allie une solide culture technique à une vision produit orientée business, data et delivery.
 
 ✉️ corentinpoisson44@gmail.com · 📍 Paris / Région parisienne, France · [LinkedIn](https://www.linkedin.com/in/corentin-poisson-15126711b/) · [GitHub](https://github.com/corentinpoisson44-collab)
 
@@ -12,7 +12,7 @@ Product Manager avec plus de 7 ans d'expérience dans le digital, j'ai évolué 
 - **Product Management & Agilité** : Vision & stratégie produit, Roadmap & priorisation, Gestion de backlog, User Story Mapping, PI Planning (SAFe), Scrum / Kanban, Facilitation & rétrospectives, DoR / DoD, Coaching Product Owner
 - **Gestion de projet & delivery** : Cadrage & étude de besoins, Étude d'impact, Pilotage macro & capacités, Delivery data-driven, Conduite du changement, Relation client & parties prenantes
 - **Développement** : Java / Java EE (Spring Boot, Struts, Liferay), Python, PHP (Laravel), JavaScript / TypeScript / React, Oracle SQL / PL-SQL, Architecture hexagonale · API REST · BFF
-- **Outils & méthodes** : JIRA · Confluence · Trello, Klaxoon · Draft.io, Kibana · Splunk, Git · GitLab · Jenkins · SonarQube, JUnit · Mockito · Katalon · Robot Framework, Suite Office · Postman
+- **Outils & méthodes** : JIRA · Confluence · Trello, Klaxoon · Draft.io, Kibana · Splunk · Dynatrace, Git · GitLab · Jenkins · SonarQube · Azure DevOps, AEM (Adobe Experience Manager), JUnit · Mockito · Katalon · Robot Framework, Suite Office · Postman
 - **Secteurs d'activité** : Luxe & e-commerce, Banque & crédit, Gestion d'actifs, Finances publiques
 
 ## Expériences

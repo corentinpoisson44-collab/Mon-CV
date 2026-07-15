@@ -38,7 +38,7 @@ profile:
       Product Manager avec plus de 7 ans d'expérience dans le digital, j'ai
       évolué du développement fullstack Java/JS vers le pilotage produit
       (Scrum Master, Product Owner puis Product Manager). J'interviens
-      aujourd'hui au cœur de l'expérience e-commerce de chanel.com (division
+      aujourd'hui au cœur de l'expérience digitale (division
       Mode), sur des APIs et des architectures headless. J'allie une solide
       culture technique à une vision produit orientée business, data et
       delivery.
@@ -88,8 +88,9 @@ skills:
     items:
       - "JIRA · Confluence · Trello"
       - "Klaxoon · Draft.io"
-      - "Kibana · Splunk"
-      - "Git · GitLab · Jenkins · SonarQube"
+      - "Kibana · Splunk · Dynatrace"
+      - "Git · GitLab · Jenkins · SonarQube · Azure DevOps"
+      - "AEM (Adobe Experience Manager)"
       - "JUnit · Mockito · Katalon · Robot Framework"
       - "Suite Office · Postman"
 

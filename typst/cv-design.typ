@@ -1,14 +1,16 @@
 // =============================================================================
 //  cv-design.typ — version « design » du dossier de compétences
-//  Rendu soigné : bandeau d'en-tête, couleur d'accent, puces, filets.
+//  Parti pris éditorial monochrome (noir & blanc) : masthead centré en
+//  capitales espacées, sections numérotées, filets fins, puces sobres.
 // =============================================================================
 #import "lib.typ": data, lang, tr, L, daterange
 
-// -- Palette ------------------------------------------------------------------
-#let accent = rgb("#1f6feb")
-#let ink = rgb("#1a1a1a")
-#let muted = rgb("#5b6570")
-#let hair = rgb("#e3e7ec")
+// -- Palette monochrome -------------------------------------------------------
+#let ink   = rgb("#111111") // texte principal, quasi noir
+#let mid   = rgb("#454545") // texte secondaire
+#let muted = rgb("#8a8a8a") // méta, dates, filets typés
+#let hair  = rgb("#d9d9d9") // filets fins
+#let wash  = rgb("#f3f3f3") // fond des étiquettes
 
 #set document(
   title: tr(data.profile.title) + " — " + data.profile.name,
@@ -17,10 +19,12 @@
 
 #set page(
   paper: "a4",
-  margin: (x: 1.6cm, top: 1.4cm, bottom: 1.4cm),
+  margin: (x: 1.9cm, top: 1.6cm, bottom: 1.5cm),
   footer: context [
-    #set text(8pt, fill: muted)
-    #data.profile.name
+    #line(length: 100%, stroke: 0.5pt + hair)
+    #v(0.35em)
+    #set text(7.5pt, fill: muted, tracking: 0.04em)
+    #smallcaps(data.profile.name)
     #h(1fr)
     #L.updated #data.meta.updated
     #h(1fr)
@@ -29,49 +33,43 @@
 )
 
 #set text(font: "DejaVu Sans", size: 9.5pt, fill: ink, lang: lang)
-#set par(justify: true, leading: 0.62em)
+#set par(justify: true, leading: 0.6em)
 
-// -- Titre de section ---------------------------------------------------------
+// -- Section numérotée --------------------------------------------------------
+#let sec-counter = counter("section")
 #let section(title) = {
-  v(0.7em)
-  block(
-    grid(
-      columns: (auto, 1fr),
-      align: (left + horizon, left + horizon),
-      column-gutter: 0.6em,
-      text(11pt, weight: "bold", fill: accent, upper(title)),
-      line(length: 100%, stroke: 0.6pt + hair),
-    ),
-  )
-  v(0.15em)
+  sec-counter.step()
+  v(0.75em)
+  block(sticky: true, grid(
+    columns: (auto, auto, 1fr),
+    align: (left + horizon, left + horizon, left + horizon),
+    column-gutter: 0.7em,
+    context {
+      let n = sec-counter.get().first()
+      let s = if n < 10 { "0" + str(n) } else { str(n) }
+      text(8.5pt, fill: muted, weight: "bold", tracking: 0.05em)[#s]
+    },
+    text(10.5pt, weight: "bold", fill: ink, tracking: 0.2em)[#upper(title)],
+    line(length: 100%, stroke: 0.6pt + hair),
+  ))
+  v(0.45em)
 }
 
-// -- Puce de compétence -------------------------------------------------------
+// -- Étiquette de compétence (monochrome) -------------------------------------
 #let chip(txt) = box(
-  fill: accent.lighten(88%),
-  inset: (x: 0.55em, y: 0.3em),
-  radius: 4pt,
-  text(8.5pt, fill: accent.darken(15%), txt),
+  fill: wash,
+  inset: (x: 0.6em, y: 0.34em),
+  radius: 2pt,
+  text(8.5pt, fill: ink, txt),
 )
 
-// =============================================================================
-//  EN-TÊTE
-// =============================================================================
-#block(
-  fill: accent,
-  width: 100%,
-  inset: (x: 1.1em, y: 0.9em),
-  radius: 6pt,
-  [
-    #set text(fill: white)
-    #text(19pt, weight: "bold", data.profile.name) \
-    #v(-0.3em)
-    #text(11.5pt, fill: white.darken(6%), tr(data.profile.title))
-  ],
-)
+// -- Marqueurs de liste -------------------------------------------------------
+#let bullet = text(fill: mid, baseline: -0.02em)[–]
+#let arrow  = text(fill: ink, weight: "bold")[→]
 
-#v(0.4em)
-// Ligne de contact
+// =============================================================================
+//  MASTHEAD
+// =============================================================================
 #let contacts = (
   data.profile.email,
   if data.profile.at("phone", default: "") != "" { data.profile.phone },
@@ -79,14 +77,26 @@
 ).filter(x => x != none and x != "")
 #let contact-links = data.profile.at("links", default: ())
 
-#block[
-  #set text(8.8pt, fill: muted)
-  #contacts.join("  ·  ")
-  #if contact-links.len() > 0 [
-    #linebreak()
-    #contact-links.map(l => link(l.url, text(fill: accent, l.label + " ↗"))).join("  ·  ")
+#align(center)[
+  #text(24pt, weight: "bold", tracking: 0.28em)[#upper(data.profile.name)]
+  #v(0.5em)
+  #line(length: 16%, stroke: 0.9pt + ink)
+  #v(0.5em)
+  #text(9pt, fill: mid, tracking: 0.3em)[#upper(tr(data.profile.title))]
+  #v(0.75em)
+  #block[
+    #set text(8.3pt, fill: muted, tracking: 0.02em)
+    #contacts.join("   ·   ")
+    #if contact-links.len() > 0 [
+      #linebreak()
+      #v(0.15em)
+      #contact-links.map(l => link(l.url, text(fill: ink)[#l.label #text(fill: muted)[↗]])).join("   ·   ")
+    ]
   ]
 ]
+
+#v(0.9em)
+#line(length: 100%, stroke: 0.8pt + ink)
 
 // =============================================================================
 //  PROFIL
@@ -99,21 +109,19 @@
 // =============================================================================
 #section(L.skills)
 #for group in data.at("skills", default: ()) {
-  block(
-    grid(
-      columns: (5.5cm, 1fr),
-      column-gutter: 0.6em,
-      row-gutter: 0.4em,
-      text(weight: "bold", tr(group.category)),
-      box(width: 100%, {
-        for it in group.items {
-          chip(tr(it))
-          h(0.35em)
-        }
-      }),
-    ),
-  )
-  v(0.2em)
+  block(breakable: false, grid(
+    columns: (5.2cm, 1fr),
+    column-gutter: 0.8em,
+    row-gutter: 0.4em,
+    par(justify: false, text(weight: "bold", size: 9pt, hyphenate: false, tr(group.category))),
+    box(width: 100%, par(leading: 0.8em, {
+      for it in group.items {
+        chip(tr(it))
+        h(0.35em)
+      }
+    })),
+  ))
+  v(0.28em)
 }
 
 // =============================================================================
@@ -125,40 +133,41 @@
     grid(
       columns: (1fr, auto),
       column-gutter: 0.8em,
-      align: (left + horizon, right + horizon),
+      align: (left + top, right + top),
       [
-        #text(10.5pt, weight: "bold", tr(exp.role)) — #text(10.5pt, fill: accent, exp.company)
+        #text(10.5pt, weight: "bold", tr(exp.role))
+        #text(10.5pt, fill: mid)[ — #exp.company]
       ],
-      text(8.5pt, fill: muted, daterange(exp.start, exp.end)),
+      text(8pt, fill: muted, tracking: 0.03em, daterange(exp.start, exp.end)),
     )
     if exp.at("location", default: none) != none {
       text(8.5pt, fill: muted, style: "italic", tr(exp.location))
     }
-    v(0.25em)
+    v(0.28em)
     if exp.at("context", default: none) != none {
-      block(text(9pt, fill: muted, style: "italic", tr(exp.context)))
-      v(0.15em)
+      block(text(9pt, fill: mid, style: "italic", tr(exp.context)))
+      v(0.18em)
     }
     for m in exp.at("missions", default: ()) {
-      grid(columns: (0.9em, 1fr),
-        text(fill: accent, "▪"), tr(m))
+      grid(columns: (1em, 1fr), column-gutter: 0.2em, bullet, tr(m))
     }
     let achs = exp.at("achievements", default: ())
     if achs.len() > 0 {
-      v(0.2em)
-      text(8.8pt, weight: "bold", fill: accent, L.achievements + " : ")
+      v(0.25em)
+      text(8.5pt, weight: "bold", fill: ink, tracking: 0.12em)[#upper(L.achievements)]
+      v(0.15em)
       for a in achs {
-        grid(columns: (0.9em, 1fr), column-gutter: 0.3em, text(fill: accent, "→"), tr(a))
+        grid(columns: (1em, 1fr), column-gutter: 0.2em, arrow, tr(a))
       }
     }
     let st = exp.at("stack", default: ())
     if st.len() > 0 {
-      v(0.25em)
-      text(8.5pt, fill: muted, weight: "bold", L.stack + " : ")
-      text(8.5pt, fill: muted, st.join(" · "))
+      v(0.3em)
+      text(8pt, fill: muted, weight: "bold", tracking: 0.08em)[#upper(L.stack) ]
+      text(8.5pt, fill: mid, st.join("  ·  "))
     }
   })
-  v(0.55em)
+  v(0.5em)
 }
 
 // =============================================================================
@@ -171,14 +180,14 @@
     grid(
       columns: (1fr, auto),
       column-gutter: 0.8em,
-      align: (left, right),
+      align: (left + top, right + top),
       [
         #text(weight: "bold", tr(ed.degree))#if field != "" [ — #field] \
-        #text(9pt, fill: muted, ed.school)#if ed.at("location", default: none) != none [ · #tr(ed.location)]
+        #text(9pt, fill: mid, ed.school)#if ed.at("location", default: none) != none [ · #tr(ed.location)]
       ],
-      text(8.5pt, fill: muted, daterange(ed.start, ed.at("end", default: ""))),
+      text(8pt, fill: muted, tracking: 0.03em, daterange(ed.start, ed.at("end", default: ""))),
     )
-    v(0.3em)
+    v(0.35em)
   }
 }
 
@@ -187,23 +196,26 @@
 // =============================================================================
 #let certs = data.at("certifications", default: ())
 #let langs = data.at("languages", default: ())
-#if certs.len() > 0 or langs.len() > 0 {
-  grid(
-    columns: (1fr, 1fr),
-    column-gutter: 1.2em,
-    if certs.len() > 0 [
-      #section(L.certifications)
-      #for c in certs [
-        - #text(weight: "bold", c.name) — #text(fill: muted, c.issuer) #if c.at("year", default: none) != none [(#c.year)]
-      ]
-    ],
-    if langs.len() > 0 [
-      #section(L.languages)
-      #for lg in langs [
-        - #text(weight: "bold", tr(lg.name)) — #text(fill: muted, tr(lg.level))
-      ]
-    ],
-  )
+#let render-certs = [
+  #section(L.certifications)
+  #for c in certs [
+    #grid(columns: (1em, 1fr), column-gutter: 0.2em, bullet,
+      [#text(weight: "bold", c.name) — #text(fill: mid, c.issuer)#if c.at("year", default: none) != none [ (#c.year)]])
+  ]
+]
+#let render-langs = [
+  #section(L.languages)
+  #for lg in langs [
+    #grid(columns: (1em, 1fr), column-gutter: 0.2em, bullet,
+      [#text(weight: "bold", tr(lg.name)) — #text(fill: mid, tr(lg.level))])
+  ]
+]
+#if certs.len() > 0 and langs.len() > 0 {
+  grid(columns: (1fr, 1fr), column-gutter: 1.4em, render-certs, render-langs)
+} else if certs.len() > 0 {
+  render-certs
+} else if langs.len() > 0 {
+  render-langs
 }
 
 // =============================================================================
@@ -212,10 +224,10 @@
 #let interests = data.at("interests", default: ())
 #if interests.len() > 0 {
   section(L.interests)
-  box(width: 100%, {
+  box(width: 100%, par(leading: 0.8em, {
     for it in interests {
       chip(tr(it))
       h(0.35em)
     }
-  })
+  }))
 }
