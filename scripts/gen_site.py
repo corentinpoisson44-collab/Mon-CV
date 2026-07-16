@@ -378,6 +378,14 @@ a { color: inherit; }
 .bar-dl a::after { content: " ↓"; }
 @media (max-width: 720px) { .bar-dl { display: none; } }
 
+.show-link {
+  font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  text-decoration: none; color: var(--ink); white-space: nowrap;
+  border-bottom: 1px solid var(--accent); padding-bottom: 2px; transition: color .15s;
+}
+.show-link:hover { color: var(--accent); }
+@media (max-width: 560px) { .show-link { display: none; } }
+
 /* ---- Conteneur ----------------------------------------------------------- */
 .wrap {
   max-width: 1160px;
@@ -631,6 +639,7 @@ PAGE = """<!doctype html>
         <button class="on" data-lang="fr" onclick="setLang('fr')">FR</button>
         <button data-lang="en" onclick="setLang('en')">EN</button>
       </div>
+      <a class="show-link" href="showcase/">Réalisations <span class="arw">↗</span></a>
       <button class="icon-btn" id="theme-btn" onclick="toggleTheme()" aria-label="Theme"><span id="theme-ico">◐</span></button>
       <span class="bar-dl">
         <a id="dl-design" href="cv-design-fr.pdf" download><!--DL_DESIGN--></a>
@@ -749,6 +758,12 @@ def main() -> int:
         page = page.replace(token, value)
 
     (SITE / "index.html").write_text(page, encoding="utf-8")
+
+    # Copie du dossier « Réalisations » (pages statiques autonomes)
+    showcase_src = ROOT / "showcase"
+    if showcase_src.is_dir():
+        shutil.copytree(showcase_src, SITE / "showcase", dirs_exist_ok=True)
+        print("  ✓ showcase/ copié dans site/showcase/")
 
     # Copie des PDF disponibles
     copied = 0

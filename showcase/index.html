@@ -1,0 +1,697 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Réalisations — Outils internes · Corentin Poisson</title>
+<meta name="description" content="Recréations de démonstration (données synthétiques) d'outils d'observabilité et d'inspection front conçus en production.">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d0d0d" media="(prefers-color-scheme: dark)">
+<style>
+/* =========================================================================
+   Réalisations — même langage visuel que le CV (école suisse)
+   Reproduction FIDÈLE du dashboard d'observabilité, données SYNTHÉTIQUES.
+   Aucune marque, aucune donnée, aucun nom de service réels.
+   ========================================================================= */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body,h1,h2,h3,h4,h5,p,dl,dd,ul,figure,table{margin:0}
+ul{list-style:none;padding:0}
+
+:root{
+  --paper:#ffffff; --panel:#fafafa; --panel-2:#f4f4f4;
+  --ink:#101010; --ink-2:#333; --muted:#6a6a6a; --faint:#9a9a9a;
+  --rule:#101010; --hair:#e4e4e4; --accent:#e3120b; --sel:#ffe1df;
+  --s-blue:#2a78d6; --s-green:#008300; --s-magenta:#e87ba4; --s-yellow:#eda100;
+  --s-aqua:#1baf7a; --s-orange:#eb6834; --s-violet:#4a3aa7; --s-red:#e34948;
+  --st-good:#0ca30c; --st-warn:#fab219; --st-serious:#ec835a; --st-crit:#d03b3b;
+  --seq-1:#cde2fb; --seq-2:#9ec5f4; --seq-3:#5598e7; --seq-4:#2a78d6; --seq-5:#184f95;
+  --grid:#e6e6e2; --axis:#c3c2b7; --logbg:#fbfbfa;
+  --sans:"Inter",ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular","SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+}
+:root[data-theme="dark"]{
+  --paper:#0d0d0d; --panel:#151515; --panel-2:#1b1b1b;
+  --ink:#ededea; --ink-2:#c9c9c4; --muted:#9a9a94; --faint:#6f6f6a;
+  --rule:#ededea; --hair:#262626; --accent:#ff4b3e; --sel:#40100c;
+  --s-blue:#3987e5; --s-green:#008300; --s-magenta:#d55181; --s-yellow:#c98500;
+  --s-aqua:#199e70; --s-orange:#d95926; --s-violet:#9085e9; --s-red:#e66767;
+  --seq-1:#0d366b; --seq-2:#184f95; --seq-3:#2a78d6; --seq-4:#5598e7; --seq-5:#9ec5f4;
+  --grid:#242422; --axis:#383835; --logbg:#121212;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0d0d0d; --panel:#151515; --panel-2:#1b1b1b;
+    --ink:#ededea; --ink-2:#c9c9c4; --muted:#9a9a94; --faint:#6f6f6a;
+    --rule:#ededea; --hair:#262626; --accent:#ff4b3e; --sel:#40100c;
+    --s-blue:#3987e5; --s-green:#008300; --s-magenta:#d55181; --s-yellow:#c98500;
+    --s-aqua:#199e70; --s-orange:#d95926; --s-violet:#9085e9; --s-red:#e66767;
+    --seq-1:#0d366b; --seq-2:#184f95; --seq-3:#2a78d6; --seq-4:#5598e7; --seq-5:#9ec5f4;
+    --grid:#242422; --axis:#383835; --logbg:#121212;
+  }
+}
+::selection{background:var(--sel);color:var(--ink)}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit}
+
+/* ---- barre ---- */
+.bar{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;
+  gap:16px;padding:11px clamp(16px,5vw,56px);background:color-mix(in srgb,var(--paper) 86%,transparent);
+  backdrop-filter:saturate(140%) blur(10px);-webkit-backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--hair)}
+.bar-ident{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:var(--ink);white-space:nowrap}
+.bar-ident b{color:var(--accent)}
+.bar a.back{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--muted);text-decoration:none}
+.bar a.back:hover{color:var(--accent)}
+.icon-btn{font-family:var(--mono);font-size:12px;letter-spacing:.1em;background:transparent;border:1px solid var(--rule);color:var(--ink);cursor:pointer;padding:6px 10px;line-height:1}
+.icon-btn:hover{background:var(--panel)}
+.bar-actions{display:flex;align-items:center;gap:14px}
+
+/* ---- conteneur ---- */
+.wrap{max-width:1280px;margin:0 auto;padding:clamp(30px,6vw,72px) clamp(16px,5vw,56px) 64px}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.kicker b{color:var(--accent);font-weight:600}
+h1.title{font-size:clamp(32px,6vw,62px);line-height:.98;letter-spacing:-.03em;font-weight:800;text-transform:uppercase;margin:16px 0 0}
+.lede{font-size:clamp(16px,2vw,19px);color:var(--ink-2);max-width:62ch;margin-top:18px;text-wrap:balance}
+.note{margin-top:18px;display:inline-flex;gap:9px;align-items:center;font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+  color:var(--muted);border:1px solid var(--hair);padding:7px 11px;background:var(--panel)}
+.note .dot{width:8px;height:8px;background:var(--st-warn);display:inline-block}
+
+.show{margin-top:clamp(44px,7vw,84px);border-top:2px solid var(--rule);padding-top:clamp(22px,3vw,34px)}
+.show-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.show-num{font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--accent)}
+.show-title{font-size:clamp(20px,3vw,28px);font-weight:700;letter-spacing:-.02em}
+.show-sub{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.show-desc{color:var(--muted);font-size:14.5px;max-width:74ch;margin:-8px 0 22px}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin:-4px 0 24px}
+.tags li{font-family:var(--mono);font-size:11px;color:var(--muted);border:1px solid var(--hair);padding:5px 9px}
+
+/* ---- board ---- */
+.board{border:1px solid var(--hair);background:var(--panel);padding:clamp(10px,1.4vw,16px)}
+.board-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-bottom:11px;margin-bottom:12px;border-bottom:1px solid var(--hair)}
+.board-bar .env{display:inline-flex;border:1px solid var(--axis)}
+.board-bar .env button{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;background:transparent;color:var(--muted);
+  border:0;border-left:1px solid var(--axis);padding:5px 9px;cursor:pointer}
+.board-bar .env button:first-child{border-left:0}
+.board-bar .env button.on{background:var(--ink);color:var(--paper)}
+.board-bar .range{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.04em}
+.board-bar .live{margin-left:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--st-good);display:inline-flex;align-items:center;gap:7px}
+.board-bar .live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--st-good);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--st-good) 55%,transparent)}70%{box-shadow:0 0 0 7px transparent}100%{box-shadow:0 0 0 0 transparent}}
+@media (prefers-reduced-motion:reduce){.board-bar .live::before{animation:none}}
+
+.grid{display:grid;gap:10px;grid-template-columns:repeat(12,1fr)}
+.card{border:1px solid var(--hair);background:var(--paper);padding:11px 12px 10px;min-width:0}
+.card h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);font-weight:600;
+  display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.card .cap{font-family:var(--mono);font-size:9.5px;letter-spacing:.03em;color:var(--faint);margin:2px 0 9px}
+.col-2{grid-column:span 2}.col-3{grid-column:span 3}.col-4{grid-column:span 4}.col-5{grid-column:span 5}
+.col-6{grid-column:span 6}.col-7{grid-column:span 7}.col-8{grid-column:span 8}.col-9{grid-column:span 9}.col-12{grid-column:span 12}
+@media (max-width:940px){.grid{grid-template-columns:repeat(6,1fr)}
+  .col-2,.col-3,.col-4,.col-5{grid-column:span 3}.col-6,.col-7,.col-8,.col-9{grid-column:span 6}}
+@media (max-width:560px){.grid{grid-template-columns:1fr}[class^="col-"]{grid-column:span 1}}
+
+/* section divider dans le board */
+.sec-div{grid-column:1/-1;display:flex;align-items:center;gap:12px;margin:10px 0 0;padding-top:8px}
+.sec-div h3{font-size:15px;font-weight:700;letter-spacing:.02em;display:flex;align-items:center;gap:9px}
+.sec-div .rule{flex:1;height:1px;background:var(--hair)}
+.sec-div small{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+
+/* stat */
+.stat .val{font-size:26px;font-weight:700;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+.statrow{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;margin-top:8px}
+.statrow .b{font-family:var(--mono)}
+.statrow .k{font-family:var(--mono);font-size:9px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint)}
+.statrow .v{font-size:17px;font-weight:700;font-variant-numeric:tabular-nums}
+.pill{font-family:var(--mono);font-size:10px;letter-spacing:.04em;padding:2px 7px;border-radius:2px;display:inline-flex;align-items:center;gap:5px}
+.pill.ok{color:var(--st-good);background:color-mix(in srgb,var(--st-good) 14%,transparent)}
+.pill.warn{color:var(--st-serious);background:color-mix(in srgb,var(--st-serious) 16%,transparent)}
+
+.legend{display:flex;flex-wrap:wrap;gap:3px 12px;margin-top:7px}
+.legend span{font-family:var(--mono);font-size:10px;color:var(--muted);display:inline-flex;align-items:center;gap:5px}
+.legend span::before{content:"";width:9px;height:9px;border-radius:2px;background:var(--c)}
+.legend span.line::before{height:2px;border-radius:1px}
+
+svg{display:block;width:100%;overflow:visible}
+text{font-family:var(--mono)}
+
+/* table */
+table.tbl{width:100%;border-collapse:collapse;font-size:12px}
+table.tbl th{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);
+  text-align:left;font-weight:500;padding:6px 4px;border-bottom:1px solid var(--hair)}
+table.tbl td{padding:8px 4px;border-bottom:1px solid var(--hair);color:var(--ink-2)}
+table.tbl td.z{font-weight:600;color:var(--ink)}
+table.tbl td .env{font-family:var(--mono);font-size:10px;color:var(--muted);border:1px solid var(--hair);padding:1px 6px;border-radius:2px}
+table.tbl td.up{font-family:var(--mono);color:var(--st-good)}
+
+/* log list */
+.loglist{font-family:var(--mono);font-size:10.5px;line-height:1.5;max-height:230px;overflow:auto;background:var(--logbg);
+  border:1px solid var(--hair)}
+.loglist .cnt{padding:6px 9px;border-bottom:1px solid var(--hair);color:var(--muted);letter-spacing:.03em;position:sticky;top:0;background:var(--logbg)}
+.loglist .cnt b{color:var(--ink)}
+.logrow{display:flex;gap:9px;padding:5px 9px;border-bottom:1px solid var(--hair)}
+.logrow:nth-child(even){background:color-mix(in srgb,var(--panel) 55%,transparent)}
+.logrow .ts{color:var(--faint);white-space:nowrap}
+.logrow .msg{color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.logrow .msg mark{background:color-mix(in srgb,var(--st-warn) 34%,transparent);color:inherit;padding:0 2px}
+.logrow .msg .err{color:var(--st-crit)}
+
+/* treemap */
+.treemap{display:flex;flex-wrap:wrap;gap:2px}
+.tm-cell{color:#fff;font-family:var(--mono);font-size:10px;padding:8px 9px;line-height:1.3;min-height:52px;
+  display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+.tm-cell b{font-size:13px}
+
+/* ===================== boutique + inspecteur ===================== */
+.shop-frame{border:1px solid var(--hair);position:relative;overflow:hidden;background:var(--paper)}
+.shop{--fg:#141414;--bg:#fff;background:var(--bg);color:var(--fg);font-family:Georgia,"Times New Roman",serif}
+.shop-top{display:flex;align-items:center;justify-content:space-between;padding:16px 26px;border-bottom:1px solid #ececec}
+.shop-logo{font-family:var(--sans);font-weight:600;letter-spacing:.42em;font-size:19px}
+.shop-nav{display:flex;gap:18px;font-family:var(--sans);font-size:11px;letter-spacing:.11em;color:#333;flex-wrap:wrap}
+.shop-nav a{text-decoration:none}.shop-nav a.on{border-bottom:1.5px solid #141414;padding-bottom:3px}
+.shop-icons{display:flex;gap:14px;color:#333;font-family:var(--sans);font-size:15px}
+.shop-hero{text-align:center;padding:34px 20px 12px}
+.shop-hero h3{font-family:var(--sans);font-weight:400;letter-spacing:.28em;font-size:26px}
+.shop-hero p{font-family:var(--sans);font-size:12.5px;color:#666;max-width:56ch;margin:12px auto 0}
+.shop-filter{text-align:center;font-family:var(--sans);font-size:11px;letter-spacing:.16em;color:#333;padding:14px 0 22px}
+.shop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#ececec;border-top:1px solid #ececec}
+@media (max-width:720px){.shop-grid{grid-template-columns:repeat(2,1fr)}}
+.prod{background:#fff;padding:16px}
+.prod .badge{font-family:var(--sans);font-size:9px;letter-spacing:.14em;color:#8a8a8a}
+.prod .ph{height:150px;margin:10px 0 14px;background:radial-gradient(120px 60px at 50% 60%,#efefef,#f7f7f7);display:flex;align-items:center;justify-content:center}
+.prod .ph svg{width:120px;height:56px}
+.prod .nm{font-family:var(--sans);font-size:12px;letter-spacing:.06em;font-weight:600}
+.prod .cl{font-family:var(--sans);font-size:10.5px;color:#888;margin-top:4px}
+.prod .pr{font-family:var(--sans);font-size:12px;margin-top:8px}
+.prod .cta{font-family:var(--sans);font-size:10px;letter-spacing:.12em;margin-top:14px;border-bottom:1px solid #141414;display:inline-block;padding-bottom:2px}
+.cms-ribbon{position:absolute;top:14px;right:-52px;transform:rotate(45deg);background:#141414;color:#fff;font-family:var(--mono);font-size:10px;
+  letter-spacing:.06em;padding:6px 60px;text-align:center;text-decoration:none;line-height:1.35;z-index:6}
+.cms-ribbon b{display:block;font-size:11px;letter-spacing:.14em}
+.cms-ribbon small{opacity:.85;text-decoration:underline}
+.tpl-badge{position:absolute;right:16px;bottom:16px;z-index:6;font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:#fff;
+  background:#141414;border-radius:22px;padding:8px 14px;display:inline-flex;align-items:center;gap:8px;cursor:default}
+.tpl-badge .g{opacity:.55}
+.inspector{position:absolute;top:14px;left:16px;z-index:8;display:flex;align-items:center;gap:6px;background:var(--paper);
+  border:1px solid var(--hair);border-radius:26px;padding:6px 8px;box-shadow:0 8px 26px rgba(0,0,0,.16)}
+.inspector .close{width:26px;height:26px;border-radius:50%;border:0;background:transparent;color:var(--muted);font-size:15px;cursor:pointer}
+.insp-btn{width:30px;height:30px;border-radius:50%;border:0;background:transparent;cursor:pointer;display:inline-flex;align-items:center;
+  justify-content:center;font-size:15px;line-height:1;transition:background .15s;text-decoration:none}
+.insp-btn:hover{background:var(--panel-2)}.insp-btn.active{background:var(--sel)}
+.insp-sep{width:1px;height:20px;background:var(--hair);margin:0 2px}
+.insp-env{position:relative}
+.insp-envlabel{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--ink);border:1px solid var(--axis);border-radius:14px;
+  padding:5px 10px;cursor:pointer;display:inline-flex;gap:7px;align-items:center}
+.insp-envlabel .d{width:7px;height:7px;border-radius:50%;background:var(--st-good)}
+.insp-menu{position:absolute;top:38px;left:0;min-width:150px;background:var(--paper);border:1px solid var(--hair);border-radius:8px;
+  box-shadow:0 10px 30px rgba(0,0,0,.18);padding:5px;display:none}
+.insp-menu.open{display:block}
+.insp-menu button{display:flex;width:100%;gap:9px;align-items:center;background:transparent;border:0;cursor:pointer;font-family:var(--mono);
+  font-size:11px;color:var(--ink);padding:7px 9px;border-radius:5px;text-align:left}
+.insp-menu button:hover{background:var(--panel-2)}
+.insp-menu button .d{width:7px;height:7px;border-radius:50%}
+.insp-menu button.on{color:var(--accent)}
+.api-panel{position:absolute;top:0;right:0;height:100%;width:min(380px,86%);z-index:9;background:var(--paper);border-left:1px solid var(--hair);
+  box-shadow:-14px 0 40px rgba(0,0,0,.18);transform:translateX(100%);transition:transform .28s cubic-bezier(.2,.7,.2,1);display:flex;flex-direction:column}
+.api-panel.open{transform:none}
+.api-head{display:flex;align-items:center;justify-content:space-between;padding:13px 15px;border-bottom:1px solid var(--hair)}
+.api-head h5{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.api-head button{background:transparent;border:0;color:var(--muted);font-size:17px;cursor:pointer}
+.api-meta{display:flex;gap:6px;flex-wrap:wrap;padding:11px 15px;border-bottom:1px solid var(--hair)}
+.api-meta span{font-family:var(--mono);font-size:10px;letter-spacing:.03em;color:var(--muted);border:1px solid var(--hair);border-radius:3px;padding:3px 7px}
+.api-body{overflow:auto;padding:13px 15px;flex:1}
+pre.json{font-family:var(--mono);font-size:11px;line-height:1.65;color:var(--ink-2);white-space:pre;margin:0}
+.json .jk{color:var(--s-violet)}.json .js{color:var(--s-green)}.json .jn{color:var(--s-blue)}.json .jb{color:var(--accent)}
+
+.foot{margin-top:64px;border-top:2px solid var(--rule);padding-top:18px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+  color:var(--faint);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+#tip{position:fixed;z-index:80;pointer-events:none;opacity:0;transition:opacity .1s;background:var(--ink);color:var(--paper);
+  font-family:var(--mono);font-size:11px;line-height:1.5;padding:7px 9px;border-radius:3px;max-width:260px;box-shadow:0 6px 22px rgba(0,0,0,.25)}
+#tip i{width:8px;height:8px;border-radius:2px;display:inline-block;margin-right:5px}
+</style>
+</head>
+<body>
+<div class="bar">
+  <a class="bar-ident" href="../"><b>◆</b> Corentin Poisson</a>
+  <div class="bar-actions">
+    <a class="back" href="../">← Retour au CV</a>
+    <button class="icon-btn" id="theme-btn" onclick="toggleTheme()" aria-label="Thème"><span id="theme-ico">◐</span></button>
+  </div>
+</div>
+
+<main class="wrap">
+  <p class="kicker">Réalisations <b>— démonstration</b></p>
+  <h1 class="title">Outils internes<br>produit &amp; delivery</h1>
+  <p class="lede">Au-delà du pilotage, je conçois et code les outils qui font gagner l'équipe : observabilité,
+    inspection front, aide au debug. Voici deux recréations interactives.</p>
+  <p class="note"><span class="dot"></span> Données 100&nbsp;% synthétiques · noms de services fictifs · aucune marque
+    ni donnée réelle. Reconstitutions à des fins de démonstration.</p>
+
+  <!-- ============================ BLOC 1 : DASHBOARD ============================ -->
+  <section class="show" id="obs">
+    <div class="show-head">
+      <span class="show-num">01</span>
+      <h2 class="show-title">Dashboard d'observabilité produit</h2>
+      <span class="show-sub">Santé · latence · métriques · services · cache · reliability</span>
+    </div>
+    <p class="show-desc">Tableau de bord unifié pour piloter une plateforme d'APIs (BFF) multi-régions :
+      santé des clusters, débit et latences P50/P95/P99 avec seuils, métriques runtime, appels sortants vers les
+      services amont, cache et taux d'erreur. Devenu l'outil de monitoring quotidien de l'équipe.</p>
+    <ul class="tags"><li>Observabilité</li><li>BFF / APIs</li><li>Multi-région</li><li>SLO / latence</li><li>Cache</li><li>Reliability</li></ul>
+
+    <div class="board">
+      <div class="board-bar">
+        <div class="env" role="group" aria-label="Environnement">
+          <button data-env="prod" class="on">PROD</button><button data-env="staging">STAGING</button><button data-env="dev">DEV</button>
+        </div>
+        <span class="range">⌚ Dernières 24 h · pas de 30 min</span>
+        <span class="live">Live</span>
+      </div>
+
+      <div class="grid">
+        <!-- ligne 1 : heatmaps -->
+        <div class="card col-6">
+          <h4>🌡️ Response Time Heatmap</h4><div class="cap">densité des temps de réponse (ms) dans le temps</div>
+          <div id="c-rt-heat"></div>
+        </div>
+        <div class="card col-6">
+          <h4>❤️ Health Heatmap — clusters <span class="pill ok">healthy</span></h4><div class="cap">checks healthcheck / minute · 3 clusters</div>
+          <div id="c-health"></div>
+        </div>
+
+        <!-- ligne 2 : IN requests all + donuts -->
+        <div class="card col-9">
+          <h4>⬇️ IN Requests — tous clusters</h4><div class="cap">volume par statut (empilé) · latence P50/P95/P99 · seuil 2 s</div>
+          <div id="c-in-all"></div>
+          <div class="legend" id="l-in-all"></div>
+        </div>
+        <div class="card col-3">
+          <h4>🍩 Répartition</h4><div class="cap">requêtes par slug / endpoint / cluster</div>
+          <div style="display:flex;gap:6px;justify-content:space-around;align-items:center">
+            <div style="text-align:center"><div id="d-slug"></div><div class="cap" style="margin:4px 0 0">slug</div></div>
+            <div style="text-align:center"><div id="d-endp"></div><div class="cap" style="margin:4px 0 0">endpoint</div></div>
+            <div style="text-align:center"><div id="d-clus"></div><div class="cap" style="margin:4px 0 0">cluster</div></div>
+          </div>
+        </div>
+
+        <!-- ligne 3 : régions -->
+        <div class="card col-4" id="rg-eu"></div>
+        <div class="card col-4" id="rg-ap"></div>
+        <div class="card col-4" id="rg-us"></div>
+
+        <!-- ============ METRICS ============ -->
+        <div class="sec-div"><h3>📊 Metrics</h3><span class="rule"></span><small>runtime JVM</small></div>
+        <div class="card col-8">
+          <h4>📈 JVM — heap utilisé</h4><div class="cap">% par zone</div>
+          <div id="c-heap"></div><div class="legend" id="l-zone"></div>
+        </div>
+        <div class="card col-4">
+          <h4>🗂️ Uptime par zone</h4><div class="cap">env · durée depuis dernier redémarrage</div>
+          <table class="tbl" id="t-uptime"></table>
+        </div>
+        <div class="card col-6"><h4>📈 CPU load</h4><div class="cap">% par zone</div><div id="c-cpu"></div></div>
+        <div class="card col-6"><h4>📈 Threads actifs</h4><div class="cap">nombre par zone</div><div id="c-thr"></div></div>
+
+        <!-- ============ SERVICES ============ -->
+        <div class="sec-div"><h3>🛠️ Services</h3><span class="rule"></span><small>appels sortants (fictifs)</small></div>
+        <div class="card col-6">
+          <h4>⬆️ OUT Requests — tous services</h4><div class="cap">volume par statut · latence médiane</div>
+          <div id="c-out-all"></div><div class="legend" id="l-out-all"></div>
+        </div>
+        <div class="card col-6">
+          <h4>⬆️ OUT Requests — CMS</h4><div class="cap">volume · latence médiane</div>
+          <div id="c-out-cms"></div>
+        </div>
+        <div class="card col-3"><h4>Template Registry</h4><div class="cap">OUT · volume</div><div id="c-svc-0"></div></div>
+        <div class="card col-3"><h4>Object Cache</h4><div class="cap">OUT · volume · médiane</div><div id="c-svc-1"></div></div>
+        <div class="card col-3"><h4>Slug Mapping</h4><div class="cap">OUT · volume · médiane</div><div id="c-svc-2"></div></div>
+        <div class="card col-3"><h4>Search Index</h4><div class="cap">OUT · volume</div><div id="c-svc-3"></div></div>
+
+        <!-- ============ CACHE ============ -->
+        <div class="sec-div"><h3>👻 Cache</h3><span class="rule"></span><small>Redis · invalidations · hit ratio <b id="hit" style="color:var(--st-good)">—</b></small></div>
+        <div class="card col-6"><h4>📉 Cache invalidations</h4><div class="cap">comptage dans le temps</div><div id="c-inval"></div></div>
+        <div class="card col-6">
+          <h4>📄 Cache invalidations <span class="pill ok" id="inval-count">—</span></h4><div class="cap">journal des invalidations</div>
+          <div class="loglist" id="log-cache"></div>
+        </div>
+        <div class="card col-3"><h4>Redis GET</h4><div class="cap">volume · P50 (ms)</div><div id="c-redis-get"></div></div>
+        <div class="card col-3"><h4>Redis SET</h4><div class="cap">volume · P50 (ms)</div><div id="c-redis-set"></div></div>
+        <div class="card col-6"><h4>🧩 Invalidations — répartition par clé</h4><div class="cap">part de chaque clé</div><div class="treemap" id="c-treemap"></div></div>
+
+        <!-- ============ RELIABILITY ============ -->
+        <div class="sec-div"><h3>⛑️ Reliability</h3><span class="rule"></span><small>taux d'erreur global <b id="err" style="color:var(--st-crit)">—</b></small></div>
+        <div class="card col-6">
+          <h4>📈 Errors by status code</h4><div class="cap">comptage dans le temps</div>
+          <div id="c-errors"></div><div class="legend" id="l-errors"></div>
+        </div>
+        <div class="card col-6">
+          <h4>📄 Derniers appels en erreur <span class="pill warn" id="err-count">—</span></h4><div class="cap">journal des erreurs</div>
+          <div class="loglist" id="log-err"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ BLOC 2 : INSPECTEUR ============================ -->
+  <section class="show" id="inspector">
+    <div class="show-head">
+      <span class="show-num">02</span>
+      <h2 class="show-title">Inspecteur front (user script)</h2>
+      <span class="show-sub">Env · payload API · deep-link CMS</span>
+    </div>
+    <p class="show-desc">Barre d'outils injectée par user script : contexte de rendu, <b>bascule d'environnement</b>,
+      <b>exploration du payload API</b> ayant servi à générer la page, et <b>deep-link vers la page CMS</b> associée.
+      Un accélérateur au quotidien pour QA, POs et devs. <em>Démo — clique sur les icônes.</em></p>
+    <ul class="tags"><li>User script</li><li>DX / QA</li><li>Debug front</li><li>Headless / API</li><li>CMS deep-link</li></ul>
+
+    <div class="shop-frame">
+      <div class="inspector" id="insp">
+        <button class="close" title="Fermer">✕</button>
+        <div class="insp-env">
+          <span class="insp-envlabel" id="envLabel"><span class="d"></span> <b id="envName">prod</b> ▾</span>
+          <div class="insp-menu" id="envMenu">
+            <button class="on" data-e="prod"><span class="d" style="background:var(--st-good)"></span> prod</button>
+            <button data-e="staging"><span class="d" style="background:var(--st-warn)"></span> staging</button>
+            <button data-e="preprod"><span class="d" style="background:var(--s-blue)"></span> preprod</button>
+            <button data-e="dev"><span class="d" style="background:var(--s-violet)"></span> dev</button>
+          </div>
+        </div>
+        <span class="insp-sep"></span>
+        <button class="insp-btn" id="btnApi" title="Explorer le payload API">🧩</button>
+        <button class="insp-btn" id="btnInfo" title="Infos de rendu">ℹ️</button>
+        <button class="insp-btn" id="btnGrid" title="Grille / layout">▦</button>
+        <span class="insp-sep"></span>
+        <a class="insp-btn" href="#" onclick="return false" title="Ouvrir la page CMS">🏛️</a>
+      </div>
+      <a class="cms-ribbon" href="#" onclick="return false" title="Ouvrir dans le CMS"><b>V5 — Edito</b><small>✎ Éditer sur le CMS</small></a>
+      <div class="shop">
+        <div class="shop-top">
+          <div class="shop-logo">MAISON</div>
+          <nav class="shop-nav">
+            <a href="#" onclick="return false">COLLECTION</a><a href="#" onclick="return false">PRÊT-À-PORTER</a>
+            <a href="#" onclick="return false">SOLAIRES</a><a class="on" href="#" onclick="return false">OPTIQUE</a>
+            <a href="#" onclick="return false">ACCESSOIRES</a><a href="#" onclick="return false">MAISON</a>
+          </nav>
+          <div class="shop-icons">⌕ &nbsp; ♡ &nbsp; ⛿</div>
+        </div>
+        <div class="shop-hero"><h3>NOUVEAUTÉS</h3>
+          <p>La collection Optique conjugue lignes contemporaines et savoir-faire : montures pantos, papillon, pilote et ovale.</p></div>
+        <div class="shop-filter">⇅ FILTRER</div>
+        <div class="shop-grid" id="shopGrid"></div>
+      </div>
+      <div class="tpl-badge">Base Template : <b>()</b> <span class="g">/</span> Template : <b>productsGrid</b> (1.18.0)</div>
+      <aside class="api-panel" id="apiPanel">
+        <div class="api-head"><h5>🧩 Payload API — /page/optique/nouveautes</h5><button id="apiClose">✕</button></div>
+        <div class="api-meta"><span>env: <b id="apiEnv">prod</b></span><span>200 OK</span><span>142 ms</span><span>cache: HIT</span><span>v5</span></div>
+        <div class="api-body"><pre class="json" id="apiJson"></pre></div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>Recréations · données synthétiques · aucune marque réelle</span>
+    <span>Composé à la grille · Corentin Poisson</span>
+  </footer>
+</main>
+<div id="tip"></div>
+
+<script>
+/* ===================== utilitaires ===================== */
+var SVGNS="http://www.w3.org/2000/svg";
+function el(t,a){var e=document.createElementNS(SVGNS,t);if(a)for(var k in a)e.setAttribute(k,a[k]);return e;}
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function fnum(n){n=Math.round(n);return n>=1000?n.toLocaleString('fr-FR'):String(n);}
+function hhmm(i){return String((i/2)|0).padStart(2,'0')+':'+(i%2?'30':'00');}
+var TIP=document.getElementById('tip');
+function tipShow(html,x,y){TIP.innerHTML=html;TIP.style.opacity=1;var w=TIP.offsetWidth,h=TIP.offsetHeight;
+  var px=x+14,py=y+14;if(px+w>innerWidth-8)px=x-w-14;if(py+h>innerHeight-8)py=y-h-14;TIP.style.left=px+'px';TIP.style.top=py+'px';}
+function tipHide(){TIP.style.opacity=0;}
+function sw(c){return '<i style="background:'+c+'"></i>';}
+function frame(host,h){var w=Math.max(150,host.getBoundingClientRect().width);var s=el('svg',{viewBox:'0 0 '+w+' '+h,width:w,height:h});
+  host.innerHTML='';host.appendChild(s);return {s:s,w:w,h:h};}
+function gridY(s,x0,x1,y0,y1,vmax,unitK){for(var i=0;i<=3;i++){var y=y1-(y1-y0)*(i/3);
+  s.appendChild(el('line',{x1:x0,x2:x1,y1:y,y2:y,stroke:css('--grid'),'stroke-width':1}));
+  var t=el('text',{x:x0-5,y:y+3,'text-anchor':'end','font-size':8.5,fill:css('--axis')});
+  var v=vmax*i/3;t.textContent=unitK&&v>=1000?(v/1000).toFixed(0)+'k':Math.round(v);s.appendChild(t);}}
+
+/* ===================== données synthétiques ===================== */
+var R=mulberry32(20260716),N=48;
+function diurnal(i){return 0.55+0.45*Math.sin((i/2-8)/24*Math.PI*2);}
+var G=[];for(var i=0;i<N;i++){var b=3600*diurnal(i)+(R()*700-350);
+  G.push({t:i,c200:Math.max(400,b),c404:Math.max(20,b*0.05+R()*120),c500:Math.max(2,b*0.01*(R()*1.7)),
+    p50:48+diurnal(i)*22+R()*10,p95:150+diurnal(i)*95+R()*45,p99:280+diurnal(i)*190+R()*130+(R()>0.94?R()*700:0)});}
+function region(mult,fb){var r=[],tot=0;for(var i=0;i<N;i++){var v2=(G[i].c200)*mult+(R()*160-80),v4=G[i].c404*mult+R()*20,v5=G[i].c500*mult*(0.6+R());
+  r.push({t:i,c200:Math.max(30,v2),c404:Math.max(2,v4),c500:Math.max(0,v5),p99:220+diurnal(i)*140+fb*90+R()*60});tot+=v2+v4+v5;}
+  return {rows:r,tot:Math.round(tot),cur:Math.round(30+R()*40),ms:Math.round(150+fb*70+R()*40),fail:fb*0.09+R()*0.03};}
+var EU=region(0.42,0.2),AP=region(0.26,0.95),US=region(0.5,0.15);
+function rt(h0,c0,t0){var h=[],c=[],t=[];for(var i=0;i<N;i++){h.push(Math.min(95,h0+Math.sin(i/5)*8+R()*10-(R()>0.9?R()*30:0)));
+  c.push(Math.max(1,c0+(R()>0.85?R()*12:R()*3)));t.push(t0+Math.sin(i/6)*14+R()*16);}return {h:h,c:c,t:t};}
+var Z=[{n:'AMER',env:'prod',up:'2 j 22 h 26 m',rt:rt(74,4,104),c:'--s-yellow'},
+       {n:'EMEA',env:'prod',up:'2 j 21 h 58 m',rt:rt(70,3,92),c:'--s-violet'},
+       {n:'APAC',env:'prod',up:'2 j 21 h 26 m',rt:rt(66,3,80),c:'--s-orange'}];
+var OUT=[];for(i=0;i<N;i++){var o=14000*diurnal(i)+R()*3000;OUT.push({t:i,o200:o,o404:o*0.03+R()*200,o500:o*0.004*R()*2,med:18+diurnal(i)*22+R()*10});}
+function svcSeries(scale,noline){var a=[];for(var i=0;i<N;i++)a.push({t:i,c:Math.max(0,scale*diurnal(i)+R()*scale*0.4),med:noline?0:14+R()*90});return a;}
+var SVC=[svcSeries(45,true),svcSeries(1600),svcSeries(4200),svcSeries(300,true)];
+var CMS=[];for(i=0;i<N;i++)CMS.push({t:i,c:7000*diurnal(i)+R()*1500,med:16+diurnal(i)*10+R()*6});
+var INVAL=[];for(i=0;i<N;i++)INVAL.push({t:i,c:(i>14&&i<26)?(40+R()*120):(R()>0.7?R()*90:0)});
+function redis(base,lat){var a=[];for(i=0;i<N;i++)a.push({t:i,c:base*diurnal(i)+R()*base*0.3,p50:lat+R()*lat*0.6});return a;}
+var RGET=redis(80000,1.4),RSET=redis(6000,2.1);
+var KEYS=[{k:'mapping:urls',v:2174},{k:'content:catalog-i18n',v:2118},{k:'content:home',v:1937},
+  {k:'sitemap:web',v:1904},{k:'mapping:slugs',v:1109},{k:'content:landing',v:760},{k:'content:pdp',v:512},{k:'nav:menu',v:333}];
+var ERR=[];for(i=0;i<N;i++)ERR.push({t:i,e400:G[i].c404*0.4+R()*40,e401:R()*30,e403:G[i].c404*0.25+R()*30,
+  e404:G[i].c404,e500:G[i].c500,e502:G[i].c500*0.4+R()*20});
+
+/* ===================== primitives ===================== */
+/* dual-axis : barres empilées (gauche=count) + lignes (droite=ms) + seuil */
+function dualAxis(host,rows,opts){opts=opts||{};var H=opts.h||150,f=frame(host,H),s=f.s,w=f.w,h=f.h;
+  var padL=30,padR=opts.lines?26:6,padB=15,padT=8;
+  var lmax=0;rows.forEach(function(r){var sum=0;opts.bars.forEach(function(b){sum+=r[b.k];});if(sum>lmax)lmax=sum;});lmax*=1.1||1;lmax=lmax||1;
+  var rmax=opts.rightMax||0;if(!rmax&&opts.lines){rows.forEach(function(r){opts.lines.forEach(function(l){if(r[l.k]>rmax)rmax=r[l.k];});});rmax*=1.15;}
+  gridY(s,padL,w-padR,padT,h-padB,lmax,true);
+  var n=rows.length,bw=(w-padL-padR)/n;
+  // barres
+  rows.forEach(function(r,ri){var x=padL+ri*bw,acc=0;
+    var tipLines=opts.bars.map(function(b){return sw(css(b.c))+b.name+' <b>'+fnum(r[b.k])+'</b>';});
+    if(opts.lines)opts.lines.forEach(function(l){tipLines.push(sw(css(l.c))+l.name+' <b>'+Math.round(r[l.k])+' ms</b>');});
+    opts.bars.forEach(function(b,bi){var hh=(r[b.k]/lmax)*(h-padB-padT);if(hh<=0.3)return;var y=(h-padB)-acc-hh;acc+=hh;
+      var rc=el('rect',{x:x+0.8,y:y,width:Math.max(1,bw-1.6),height:Math.max(0.6,hh-1),fill:css(b.c),rx:bi===opts.bars.length-1?2:0});
+      rc.addEventListener('mousemove',function(e){tipShow('<b>'+hhmm(r.t)+'</b><br>'+tipLines.join('<br>'),e.clientX,e.clientY);});
+      rc.addEventListener('mouseleave',tipHide);s.appendChild(rc);});});
+  // lignes (axe droit)
+  if(opts.lines){function X(i){return padL+bw*(i+0.5);}function Yr(v){return (h-padB)-(h-padB-padT)*(v/rmax);}
+    for(var g=0;g<=2;g++){var yv=rmax*g/2;var tt=el('text',{x:w-padR+4,y:Yr(yv)+3,'font-size':8.5,fill:css('--axis')});
+      tt.textContent=Math.round(yv);s.appendChild(tt);}
+    opts.lines.forEach(function(l){var d='';rows.forEach(function(r,i){d+=(i?'L':'M')+X(i).toFixed(1)+' '+Yr(r[l.k]).toFixed(1);});
+      s.appendChild(el('path',{d:d,fill:'none',stroke:css(l.c),'stroke-width':1.6,'stroke-linejoin':'round'}));});
+    if(opts.threshold){var yt=Yr(opts.threshold);s.appendChild(el('line',{x1:padL,x2:w-padR,y1:yt,y2:yt,stroke:css('--st-crit'),'stroke-width':1,'stroke-dasharray':'4 3'}));
+      var lab=el('text',{x:w-padR-2,y:yt-3,'text-anchor':'end','font-size':8.5,fill:css('--st-crit')});lab.textContent=opts.thresholdLabel||'seuil';s.appendChild(lab);}
+  }
+}
+
+/* line chart multi-séries + crosshair */
+function lineChart(host,rows,series,opts){opts=opts||{};var H=opts.h||120,f=frame(host,H),s=f.s,w=f.w,h=f.h;
+  var padL=28,padB=13,padT=7,max=0;rows.forEach(function(r){series.forEach(function(se){if(r[se.k]>max)max=r[se.k];});});
+  max=opts.max!=null?opts.max:max*1.14;max=max||1;gridY(s,padL,w-6,padT,h-padB,max,opts.unitK);
+  var n=rows.length;function X(i){return padL+(w-padL-6)*(i/(n-1));}function Y(v){return (h-padB)-(h-padB-padT)*(v/max);}
+  series.forEach(function(se){var d='';rows.forEach(function(r,i){d+=(i?'L':'M')+X(i).toFixed(1)+' '+Y(r[se.k]).toFixed(1);});
+    s.appendChild(el('path',{d:d,fill:'none',stroke:css(se.c),'stroke-width':se.w||1.7,'stroke-linejoin':'round','stroke-linecap':'round'}));});
+  var cl=el('line',{y1:padT,y2:h-padB,stroke:css('--axis'),'stroke-width':1,opacity:0});s.appendChild(cl);
+  var dots=series.map(function(se){var c=el('circle',{r:3,fill:css('--paper'),stroke:css(se.c),'stroke-width':1.8,opacity:0});s.appendChild(c);return c;});
+  var ov=el('rect',{x:padL,y:padT,width:w-padL-6,height:h-padB-padT,fill:'transparent'});s.appendChild(ov);
+  ov.addEventListener('mousemove',function(e){var bx=s.getBoundingClientRect();var rel=(e.clientX-bx.left)/bx.width*w;
+    var idx=Math.round((rel-padL)/((w-padL-6)/(n-1)));idx=Math.max(0,Math.min(n-1,idx));cl.setAttribute('x1',X(idx));cl.setAttribute('x2',X(idx));cl.setAttribute('opacity',1);
+    var ls=series.map(function(se,si){dots[si].setAttribute('cx',X(idx));dots[si].setAttribute('cy',Y(rows[idx][se.k]));dots[si].setAttribute('opacity',1);
+      return sw(css(se.c))+se.name+' <b>'+fnum(rows[idx][se.k])+(opts.unit||'')+'</b>';});
+    tipShow('<b>'+hhmm(idx)+'</b><br>'+ls.join('<br>'),e.clientX,e.clientY);});
+  ov.addEventListener('mouseleave',function(){cl.setAttribute('opacity',0);dots.forEach(function(d){d.setAttribute('opacity',0);});tipHide();});
+}
+
+/* histogramme simple (une série) */
+function histo(host,rows,key,color){var f=frame(host,120),s=f.s,w=f.w,h=f.h,padL=26,padB=13,padT=7;
+  var max=0;rows.forEach(function(r){if(r[key]>max)max=r[key];});max=max*1.1||1;gridY(s,padL,w-6,padT,h-padB,max);
+  var bw=(w-padL-6)/rows.length;rows.forEach(function(r,i){var hh=(r[key]/max)*(h-padB-padT);if(hh<=0.2)return;
+    var rc=el('rect',{x:padL+i*bw+0.6,y:(h-padB)-hh,width:Math.max(1,bw-1.4),height:hh,fill:color,rx:1.5});
+    rc.addEventListener('mousemove',function(e){tipShow('<b>'+hhmm(r.t)+'</b><br>'+fnum(r[key])+' invalidations',e.clientX,e.clientY);});
+    rc.addEventListener('mouseleave',tipHide);s.appendChild(rc);});}
+
+/* heatmap */
+function heatmap(host,rows,cols,cellFn,rowLabels,rowH){rowH=rowH||16;var f=frame(host,rows*(rowH+3)+4),s=f.s,w=f.w;
+  var padL=rowLabels?60:2,cw=(w-padL-2)/cols;
+  for(var r=0;r<rows;r++){if(rowLabels){var t=el('text',{x:padL-7,y:r*(rowH+3)+rowH*0.7,'text-anchor':'end','font-size':8.5,fill:css('--muted')});
+    t.textContent=rowLabels[r];s.appendChild(t);}
+    for(var c=0;c<cols;c++){var o=cellFn(r,c);var rc=el('rect',{x:padL+c*cw,y:r*(rowH+3),width:Math.max(1,cw-1.3),height:rowH,fill:o.color,rx:1});
+      (function(o){rc.addEventListener('mousemove',function(e){tipShow(o.tip,e.clientX,e.clientY);});rc.addEventListener('mouseleave',tipHide);})(o);s.appendChild(rc);}}}
+
+/* donut */
+function donut(host,segs,size){size=size||62;var f=frame(host,size),s=f.s;var cx=size/2,cy=size/2,rO=size/2-2,rI=rO*0.58;
+  var tot=segs.reduce(function(a,b){return a+b.v;},0),ang=-Math.PI/2;
+  segs.forEach(function(sg){var a2=ang+sg.v/tot*Math.PI*2;var large=(a2-ang)>Math.PI?1:0;
+    function pt(r,a){return (cx+r*Math.cos(a)).toFixed(2)+' '+(cy+r*Math.sin(a)).toFixed(2);}
+    var d='M '+pt(rO,ang)+' A '+rO+' '+rO+' 0 '+large+' 1 '+pt(rO,a2)+' L '+pt(rI,a2)+' A '+rI+' '+rI+' 0 '+large+' 0 '+pt(rI,ang)+' Z';
+    var p=el('path',{d:d,fill:css(sg.c),stroke:css('--paper'),'stroke-width':1});
+    p.addEventListener('mousemove',function(e){tipShow(sw(css(sg.c))+sg.n+' <b>'+(sg.v/tot*100).toFixed(0)+'%</b>',e.clientX,e.clientY);});
+    p.addEventListener('mouseleave',tipHide);s.appendChild(p);ang=a2;});
+  s.setAttribute('width',size);s.setAttribute('height',size);s.style.width=size+'px';}
+
+/* treemap (slice horizontale proportionnelle, avec retour à la ligne) */
+function treemap(host,items){var tot=items.reduce(function(a,b){return a+b.v;},0);
+  var ramp=['--seq-5','--seq-4','--seq-3','--s-aqua','--s-violet','--s-magenta','--s-orange','--s-yellow'];
+  host.innerHTML=items.map(function(it,i){var pct=it.v/tot*100;
+    return '<div class="tm-cell" title="'+it.k+' — '+pct.toFixed(1)+'%" style="background:'+css(ramp[i%ramp.length])
+      +';flex:'+it.v.toFixed(0)+' 1 '+Math.max(70,pct*4)+'px">'+it.k+'<b>'+pct.toFixed(1)+' %</b></div>';}).join('');}
+
+function legend(host,items){host.innerHTML=items.map(function(it){return '<span class="'+(it.line?'line ':'')+'" style="--c:'+css(it.c)+'">'+it.name+'</span>';}).join('');}
+
+/* ===================== rendu du dashboard ===================== */
+function drawObs(){
+  var g=css('--st-good'),wn=css('--st-warn'),cr=css('--st-crit');
+
+  // Response Time Heatmap : bandes latence x temps, intensité = volume
+  var seq=['--seq-1','--seq-2','--seq-3','--seq-4','--seq-5'];
+  var rtLabels=['≥ 2 s','1–2 s','500–1000','200–500','0–200'];
+  heatmap(document.getElementById('c-rt-heat'),5,N,function(r,c){var band=4-r;var p=G[c].p95;
+    var w0=[200,500,1000,2000,1e9];var lo=r===4?0:w0[3-r];var hi=w0[4-r];
+    var inband=(p>=lo&&p<hi);var lvl=inband?4:(p>hi?(R()>0.5?1:0):0);
+    var color=lvl===0?css('--panel-2'):css(seq[Math.min(4,band+ (inband?1:0))]);
+    return {color:inband?css(seq[band]):css('--panel-2'),tip:'<b>'+hhmm(c)+'</b><br>bande '+rtLabels[r]+' ms · p95 '+Math.round(p)+' ms'};
+  },rtLabels,15);
+
+  // Health Heatmap
+  var cl=['bff-web-eu1','bff-web-ap1','bff-web-us1'];
+  heatmap(document.getElementById('c-health'),3,N,function(r,c){var color=g,lab='healthy';
+    if(r===1&&c>18&&c<22){color=wn;lab='degraded';}else if(R()>0.987){color=wn;lab='degraded';}
+    return {color:color,tip:'<b>'+cl[r]+'</b><br>'+hhmm(c)+' · '+lab};},cl,17);
+
+  // IN Requests all (dual axis)
+  dualAxis(document.getElementById('c-in-all'),G,{h:168,
+    bars:[{k:'c200',c:'--st-good',name:'200'},{k:'c404',c:'--st-warn',name:'404'},{k:'c500',c:'--st-crit',name:'500'}],
+    lines:[{k:'p50',c:'--s-blue',name:'p50'},{k:'p95',c:'--s-orange',name:'p95'},{k:'p99',c:'--s-red',name:'p99'}],
+    rightMax:2200,threshold:2000,thresholdLabel:'2 s'});
+  legend(document.getElementById('l-in-all'),[{c:'--st-good',name:'200'},{c:'--st-warn',name:'404'},{c:'--st-crit',name:'500'},
+    {c:'--s-blue',name:'p50',line:1},{c:'--s-orange',name:'p95',line:1},{c:'--s-red',name:'p99',line:1}]);
+
+  // donuts
+  donut(document.getElementById('d-slug'),[{n:'/optique',v:34,c:'--s-blue'},{n:'/solaires',v:24,c:'--s-aqua'},
+    {n:'/pap',v:16,c:'--s-magenta'},{n:'/home',v:14,c:'--s-yellow'},{n:'autres',v:12,c:'--s-violet'}]);
+  donut(document.getElementById('d-endp'),[{n:'render',v:58,c:'--s-blue'},{n:'data',v:28,c:'--s-orange'},{n:'assets',v:14,c:'--s-aqua'}]);
+  donut(document.getElementById('d-clus'),[{n:'eu',v:38,c:'--s-blue'},{n:'us',v:37,c:'--s-magenta'},{n:'apac',v:25,c:'--s-violet'}]);
+
+  // régions
+  function drawRegion(host,name,flag,rg,pillCls){host.innerHTML=
+    '<h4>'+flag+' '+name+'</h4>'+
+    '<div class="statrow"><div class="b"><div class="k">total 24 h</div><div class="v">'+fnum(rg.tot)+'</div></div>'+
+    '<div class="b"><div class="k">actuel /min</div><div class="v">'+rg.cur+'</div></div>'+
+    '<div class="b"><div class="k">réponse /min</div><div class="v">'+rg.ms+' <span style="font-size:11px;color:var(--muted)">ms</span></div></div>'+
+    '<div class="b"><div class="k">failure rate</div><div class="v"><span class="pill '+pillCls+'">'+(rg.fail*100).toFixed(1)+'%</span></div></div></div>'+
+    '<div class="chart"></div>';
+    dualAxis(host.querySelector('.chart'),rg.rows,{h:96,
+      bars:[{k:'c200',c:'--st-good',name:'200'},{k:'c404',c:'--st-warn',name:'404'},{k:'c500',c:'--st-crit',name:'500'}],
+      lines:[{k:'p99',c:'--s-red',name:'p99'}],rightMax:1600,threshold:1500,thresholdLabel:'seuil'});}
+  drawRegion(document.getElementById('rg-eu'),'EU','🌍',EU,'ok');
+  drawRegion(document.getElementById('rg-ap'),'APAC','🌏',AP,'warn');
+  drawRegion(document.getElementById('rg-us'),'US','🌎',US,'ok');
+
+  // metrics
+  var heapRows=[],cpuRows=[],thrRows=[];for(i=0;i<N;i++){heapRows.push({a:Z[0].rt.h[i],e:Z[1].rt.h[i],p:Z[2].rt.h[i]});
+    cpuRows.push({a:Z[0].rt.c[i],e:Z[1].rt.c[i],p:Z[2].rt.c[i]});thrRows.push({a:Z[0].rt.t[i],e:Z[1].rt.t[i],p:Z[2].rt.t[i]});}
+  var zs=[{k:'a',c:'--s-yellow',name:'AMER'},{k:'e',c:'--s-violet',name:'EMEA'},{k:'p',c:'--s-orange',name:'APAC'}];
+  lineChart(document.getElementById('c-heap'),heapRows,zs,{h:110,max:100,unit:'%'});
+  legend(document.getElementById('l-zone'),[{c:'--s-yellow',name:'AMER',line:1},{c:'--s-violet',name:'EMEA',line:1},{c:'--s-orange',name:'APAC',line:1}]);
+  lineChart(document.getElementById('c-cpu'),cpuRows,zs,{h:110,max:100,unit:'%'});
+  lineChart(document.getElementById('c-thr'),thrRows,zs,{h:110});
+  document.getElementById('t-uptime').innerHTML='<tr><th>Zone</th><th>Env</th><th>Uptime</th></tr>'+
+    Z.map(function(z){return '<tr><td class="z">'+z.n+'</td><td><span class="env">'+z.env+'</span></td><td class="up">'+z.up+'</td></tr>';}).join('');
+
+  // services
+  dualAxis(document.getElementById('c-out-all'),OUT,{h:132,
+    bars:[{k:'o200',c:'--s-aqua',name:'200'},{k:'o404',c:'--st-warn',name:'404'},{k:'o500',c:'--st-crit',name:'500'}],
+    lines:[{k:'med',c:'--s-red',name:'médiane'}],rightMax:70});
+  legend(document.getElementById('l-out-all'),[{c:'--s-aqua',name:'200'},{c:'--st-warn',name:'404'},{c:'--st-crit',name:'500'},{c:'--s-red',name:'médiane (ms)',line:1}]);
+  dualAxis(document.getElementById('c-out-cms'),CMS,{h:132,bars:[{k:'c',c:'--s-aqua',name:'appels'}],lines:[{k:'med',c:'--s-red',name:'médiane'}],rightMax:40});
+  dualAxis(document.getElementById('c-svc-0'),SVC[0],{h:90,bars:[{k:'c',c:'--s-blue',name:'appels'}]});
+  dualAxis(document.getElementById('c-svc-1'),SVC[1],{h:90,bars:[{k:'c',c:'--s-green',name:'appels'}],lines:[{k:'med',c:'--s-red',name:'méd.'}],rightMax:120});
+  dualAxis(document.getElementById('c-svc-2'),SVC[2],{h:90,bars:[{k:'c',c:'--s-yellow',name:'appels'}],lines:[{k:'med',c:'--s-red',name:'méd.'}],rightMax:120});
+  dualAxis(document.getElementById('c-svc-3'),SVC[3],{h:90,bars:[{k:'c',c:'--s-blue',name:'appels'}]});
+
+  // cache
+  histo(document.getElementById('c-inval'),INVAL,'c',css('--muted'));
+  dualAxis(document.getElementById('c-redis-get'),RGET,{h:90,bars:[{k:'c',c:'--s-aqua',name:'GET'}],lines:[{k:'p50',c:'--s-violet',name:'P50'}],rightMax:10});
+  dualAxis(document.getElementById('c-redis-set'),RSET,{h:90,bars:[{k:'c',c:'--s-magenta',name:'SET'}],lines:[{k:'p50',c:'--s-violet',name:'P50'}],rightMax:10});
+  treemap(document.getElementById('c-treemap'),KEYS);
+  document.getElementById('hit').textContent='98.7 %';
+  document.getElementById('inval-count').textContent='975 doc.';
+  // journal cache
+  var keys=['content:catalog-i18n-web','mapping:urls','content:home-web','sitemap:web','mapping:slugs','content:landing-fr'];
+  var rowsC='<div class="cnt"><b>975</b> documents · triés par @timestamp ↓</div>';
+  for(i=0;i<26;i++){var sec=(52-i*1.7);var k=keys[i%keys.length];
+    rowsC+='<div class="logrow"><span class="ts">09:'+String(Math.max(0,Math.floor(sec))).padStart(2,'0')+':'+String(Math.floor(R()*60)).padStart(2,'0')+'</span>'+
+      '<span class="msg">Successfully invalidated cache for key: <mark>'+k+'</mark></span></div>';}
+  document.getElementById('log-cache').innerHTML=rowsC;
+
+  // reliability
+  lineChart(document.getElementById('c-errors'),ERR,[{k:'e400',c:'--seq-2',name:'400'},{k:'e401',c:'--s-magenta',name:'401'},
+    {k:'e403',c:'--s-yellow',name:'403'},{k:'e404',c:'--st-warn',name:'404'},{k:'e500',c:'--st-crit',name:'500'},{k:'e502',c:'--s-red',name:'502'}],{h:150});
+  legend(document.getElementById('l-errors'),[{c:'--seq-2',name:'400',line:1},{c:'--s-magenta',name:'401',line:1},{c:'--s-yellow',name:'403',line:1},
+    {c:'--st-warn',name:'404',line:1},{c:'--st-crit',name:'500',line:1},{c:'--s-red',name:'502',line:1}]);
+  document.getElementById('err').textContent='0.9 %';
+  document.getElementById('err-count').textContent='36 491 doc.';
+  var paths=['/v5/fr/optique/nouveautes','/v5/fr/solaires/pantos','/api/data/pdp/MO-0855','/v5/en/optique','/api/data/grid/optique'];
+  var codes=[502,500,404,502,503];var rowsE='<div class="cnt"><b>36 491</b> documents · triés par @timestamp ↓</div>';
+  for(i=0;i<26;i++){var code=codes[i%codes.length];
+    rowsE+='<div class="logrow"><span class="ts">09:52:'+String(46-Math.floor(i*0.8)).padStart(2,'0')+'</span>'+
+      '<span class="msg">{"request":"https://maison-web'+paths[i%paths.length]+'","status":<span class="err">'+code+'</span>}</span></div>';}
+  document.getElementById('log-err').innerHTML=rowsE;
+}
+document.querySelectorAll('.board-bar .env button').forEach(function(b){b.addEventListener('click',function(){
+  document.querySelectorAll('.board-bar .env button').forEach(function(x){x.classList.remove('on');});b.classList.add('on');});});
+
+/* ===================== boutique + inspecteur ===================== */
+var PRODUCTS=[{n:'MONTURE PANTOS',c:'3 coloris',p:'320 €',sku:'MP-2411',shape:'round'},
+  {n:'MONTURE PAPILLON',c:'5 coloris',p:'290 €',sku:'MB-1907',shape:'cat'},
+  {n:'MONTURE PILOTE',c:'6 coloris',p:'350 €',sku:'MA-3320',shape:'aviator'},
+  {n:'MONTURE OVALE',c:'5 coloris',p:'270 €',sku:'MO-0855',shape:'oval'}];
+function glasses(shape){return '<svg viewBox="0 0 120 56"><g fill="none" stroke="#2a2a2a" stroke-width="2.4">'+
+  '<path d="M56 20 h8"/>'+(shape==='aviator'?'<path d="M8 22 q0 20 20 20 q22 0 22-20 q-21-5-42 0z"/><path d="M112 22 q0 20-20 20 q-22 0-22-20 q21-5 42 0z"/>'
+  :shape==='cat'?'<path d="M6 20 q4-8 22-6 q20 3 22 12 q-2 12-22 12 q-22-2-22-18z"/><path d="M114 20 q-4-8-22-6 q-20 3-22 12 q2 12 22 12 q22-2 22-18z"/>'
+  :shape==='oval'?'<ellipse cx="28" cy="28" rx="22" ry="15"/><ellipse cx="92" cy="28" rx="22" ry="15"/>'
+  :'<circle cx="28" cy="28" r="18"/><circle cx="92" cy="28" r="18"/>')+'<path d="M10 20 l-8-4"/><path d="M110 20 l8-4"/></g></svg>';}
+document.getElementById('shopGrid').innerHTML=PRODUCTS.map(function(p){return '<div class="prod"><div class="badge">NOUVEAUTÉ</div>'+
+  '<div class="ph">'+glasses(p.shape)+'</div><div class="nm">'+p.n+'</div><div class="cl">'+p.c+'</div><div class="pr">'+p.p+'</div>'+
+  '<div class="cta">VOIR LES DÉTAILS</div></div>';}).join('');
+function buildPayload(env){return {page:{id:"pg_9f21c",type:"productsGrid",template:{name:"productsGrid",version:"1.18.0"},locale:"fr-FR",env:env,variant:"v5-edito"},
+  cms:{space:"maison-web",path:"/optique/nouveautes",editUrl:"cms://edit/pg_9f21c",lastPublished:"2026-07-15T09:12:00Z"},
+  cache:{status:"HIT",key:"content:optique:nouveautes",ttl:600},
+  products:PRODUCTS.map(function(p,i){return {sku:p.sku,name:p.n,colors:parseInt(p.c),price:p.p,rank:i+1};}),meta:{count:PRODUCTS.length,renderMs:142,ok:true}};}
+function colorJson(o){var j=JSON.stringify(o,null,2).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  j=j.replace(/"(\w[\w-]*)":/g,'"<span class="jk">$1</span>":').replace(/: "(.*?)"/g,': "<span class="js">$1</span>"')
+    .replace(/: (\d+\.?\d*)/g,': <span class="jn">$1</span>').replace(/: (true|false)/g,': <span class="jb">$1</span>');return j;}
+var curEnv='prod';function refreshApi(){document.getElementById('apiJson').innerHTML=colorJson(buildPayload(curEnv));document.getElementById('apiEnv').textContent=curEnv;}
+refreshApi();
+var apiPanel=document.getElementById('apiPanel'),btnApi=document.getElementById('btnApi');
+function toggleApi(o){apiPanel.classList.toggle('open',o);btnApi.classList.toggle('active',o);}
+btnApi.addEventListener('click',function(){toggleApi(!apiPanel.classList.contains('open'));});
+document.getElementById('apiClose').addEventListener('click',function(){toggleApi(false);});
+document.getElementById('btnInfo').addEventListener('click',function(){var b=this;b.classList.add('active');setTimeout(function(){b.classList.remove('active');},1200);
+  tipShow('ℹ️ SSR · variant v5-edito · cache HIT · 142 ms',innerWidth/2-90,240);setTimeout(tipHide,1600);});
+document.getElementById('btnGrid').addEventListener('click',function(){this.classList.toggle('active');var on=this.classList.contains('active');
+  document.querySelectorAll('.prod').forEach(function(p){p.style.outline=on?'1px dashed color-mix(in srgb,var(--accent) 45%,transparent)':'';});});
+var envLabel=document.getElementById('envLabel'),envMenu=document.getElementById('envMenu');
+envLabel.addEventListener('click',function(e){e.stopPropagation();envMenu.classList.toggle('open');});
+document.addEventListener('click',function(){envMenu.classList.remove('open');});
+envMenu.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){curEnv=b.getAttribute('data-e');
+  document.getElementById('envName').textContent=curEnv;envLabel.querySelector('.d').style.background=b.querySelector('.d').style.background;
+  envMenu.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});b.classList.add('on');refreshApi();envMenu.classList.remove('open');});});
+document.querySelector('.inspector .close').addEventListener('click',function(){document.getElementById('insp').style.opacity=.35;});
+
+/* ===================== thème ===================== */
+function currentTheme(){return document.documentElement.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');}
+function paintIco(){document.getElementById('theme-ico').textContent=currentTheme()==='dark'?'☀':'☾';}
+function toggleTheme(){var next=currentTheme()==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',next);
+  try{localStorage.setItem('cv-theme',next);}catch(e){}paintIco();drawObs();}
+(function(){try{var s=localStorage.getItem('cv-theme');if(s)document.documentElement.setAttribute('data-theme',s);}catch(e){}paintIco();})();
+var rT;addEventListener('resize',function(){clearTimeout(rT);rT=setTimeout(drawObs,180);});
+drawObs();
+</script>
+</body>
+</html>

@@ -129,7 +129,9 @@ experiences:
           en: "Structured the delivery framework on JIRA: status taxonomy, automations, qualification tooling (DoR, bug-triage decision trees, macro-sizing grid)." }
       - { fr: "Interface clé entre tech, POs et business pour la cohérence produit des APIs et le planning cross-plateforme (web & app).",
           en: "Key interface between tech, POs and business to ensure API product consistency and cross-platform planning (web & app)." }
-    achievements: []
+    achievements:
+      - { fr: "Dashboard d'observabilité produit (santé multi-cluster, latences P50/P95/P99, cache et reliability) devenu l'outil de monitoring quotidien de l'équipe.",
+          en: "Product observability dashboard (multi-cluster health, P50/P95/P99 latencies, cache and reliability) that became the team's daily monitoring tool." }
     stack:
       - "JIRA"
       - "Kibana"
