@@ -14,7 +14,7 @@
 # =============================================================================
 
 meta:
-  updated: "2026-07-15"
+  updated: "2026-07-20"
   default_lang: "fr"
 
 profile:
@@ -22,6 +22,7 @@ profile:
   title:
     fr: "Product Manager — Digital & E-commerce"
     en: "Product Manager — Digital & E-commerce"
+  page_url: "https://corentinpoisson44-collab.github.io/Mon-CV/"
   email: "corentinpoisson44@gmail.com"
   phone: ""                       # laissé vide volontairement ; à compléter si besoin
   location:
@@ -83,6 +84,8 @@ skills:
       - "JavaScript / TypeScript / React"
       - "Oracle SQL / PL-SQL"
       - { fr: "Architecture hexagonale · API REST · BFF", en: "Hexagonal architecture · REST API · BFF" }
+      - { fr: "Vibe coding assisté par IA (Claude Code)", en: "AI-assisted vibe coding (Claude Code)" }
+      - { fr: "User scripts (Tampermonkey / Greasemonkey)", en: "User scripts (Tampermonkey / Greasemonkey)" }
 
   - category: { fr: "Outils & méthodes", en: "Tools & methods" }
     items:
@@ -93,6 +96,7 @@ skills:
       - "AEM (Adobe Experience Manager)"
       - "JUnit · Mockito · Katalon · Robot Framework"
       - "Suite Office · Postman"
+      - "Claude Code (agents IA de dev)"
 
   - category: { fr: "Secteurs d'activité", en: "Industries" }
     items:
@@ -123,8 +127,10 @@ experiences:
           en: "Set up agile macro planning to anticipate capacity and align stakeholders on deadlines." }
       - { fr: "Conception d'un dashboard Kibana complet : health state, business data, cache management et reliability.",
           en: "Built a complete Kibana dashboard: health state, business data, cache management and reliability." }
-      - { fr: "Développement d'une surcouche de pilotage de roadmap sur JIRA : progression des Epics, projection des dates d'atterrissage par la vélocité, statut On Track / At Risk / Off Track.",
-          en: "Developed a roadmap-steering layer on top of JIRA: Epic progress, velocity-based landing-date projection, On Track / At Risk / Off Track status." }
+      - { fr: "Conception et développement, en autonomie, d'une surcouche de pilotage de roadmap sur JIRA : progression des Epics, projection des dates d'atterrissage par la vélocité, statut On Track / At Risk / Off Track.",
+          en: "Personally designed and built a roadmap-steering layer on top of JIRA: Epic progress, velocity-based landing-date projection, On Track / At Risk / Off Track status." }
+      - { fr: "En parallèle du pilotage produit, développement en autonomie (« vibe coding » assisté par Claude Code) de user scripts qui automatisent et fluidifient mon quotidien et celui de mes collègues (gains de temps sur les tâches récurrentes de suivi et de qualification).",
+          en: "Alongside product leadership, independently built (AI-assisted \"vibe coding\" with Claude Code) user scripts that automate and streamline my own and my colleagues' daily work (time savings on recurring tracking and qualification tasks)." }
       - { fr: "Structuration du cadre de delivery sur JIRA : taxonomie de statuts, automatisations, outillage de qualification (DoR, arbres de triage de bugs, grille de macro-sizing).",
           en: "Structured the delivery framework on JIRA: status taxonomy, automations, qualification tooling (DoR, bug-triage decision trees, macro-sizing grid)." }
       - { fr: "Interface clé entre tech, POs et business pour la cohérence produit des APIs et le planning cross-plateforme (web & app).",
@@ -155,8 +161,8 @@ experiences:
           en: "Optimised caching and standardised JSON components, easing page authoring in an AEM CMS." }
       - { fr: "Implication dans le RUN et traitement proactif des anomalies de production.",
           en: "Involved in RUN activities and proactive handling of production incidents." }
-      - { fr: "Développement d'un outil interne de test et debug des pages front-end, améliorant l'efficacité des QA et la qualité des livraisons.",
-          en: "Built an internal tool to test and debug front-end pages, improving QA efficiency and delivery quality." }
+      - { fr: "Développement personnel, en autonomie, d'un outil interne de test et debug des pages front-end, améliorant l'efficacité des QA et la qualité des livraisons.",
+          en: "Personally built, on my own initiative, an internal tool to test and debug front-end pages, improving QA efficiency and delivery quality." }
     achievements: []
     stack:
       - "API Façade"
