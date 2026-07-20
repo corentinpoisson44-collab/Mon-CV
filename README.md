@@ -13,8 +13,8 @@ Product Manager avec plus de 7 ans d'expérience dans le digital, j'ai évolué 
 
 - **Product Management & Agilité** : Vision & stratégie produit, Roadmap & priorisation, Gestion de backlog, User Story Mapping, PI Planning (SAFe), Scrum / Kanban, Facilitation & rétrospectives, DoR / DoD, Coaching Product Owner
 - **Gestion de projet & delivery** : Cadrage & étude de besoins, Étude d'impact, Pilotage macro & capacités, Delivery data-driven, Conduite du changement, Relation client & parties prenantes
-- **Développement** : Java / Java EE (Spring Boot, Struts, Liferay), Python, PHP (Laravel), JavaScript / TypeScript / React, Oracle SQL / PL-SQL, Architecture hexagonale · API REST · BFF
-- **Outils & méthodes** : JIRA · Confluence · Trello, Klaxoon · Draft.io, Kibana · Splunk · Dynatrace, Git · GitLab · Jenkins · SonarQube · Azure DevOps, AEM (Adobe Experience Manager), JUnit · Mockito · Katalon · Robot Framework, Suite Office · Postman
+- **Développement** : Java / Java EE (Spring Boot, Struts, Liferay), Python, PHP (Laravel), JavaScript / TypeScript / React, Oracle SQL / PL-SQL, Architecture hexagonale · API REST · BFF, Vibe coding assisté par IA (Claude Code), User scripts (Tampermonkey / Greasemonkey)
+- **Outils & méthodes** : JIRA · Confluence · Trello, Klaxoon · Draft.io, Kibana · Splunk · Dynatrace, Git · GitLab · Jenkins · SonarQube · Azure DevOps, AEM (Adobe Experience Manager), JUnit · Mockito · Katalon · Robot Framework, Suite Office · Postman, Claude Code (agents IA de dev)
 - **Secteurs d'activité** : Luxe & e-commerce, Banque & crédit, Gestion d'actifs, Finances publiques
 
 ## Expériences
@@ -28,7 +28,8 @@ Product Manager avec plus de 7 ans d'expérience dans le digital, j'ai évolué 
 - Pilotage de 2 Product Owners techniques et d'une équipe de 6 devs/QA autour d'une roadmap unifiée et data-driven.
 - Mise en place d'un pilotage macro agile pour anticiper les capacités et aligner les parties prenantes sur les échéances.
 - Conception d'un dashboard Kibana complet : health state, business data, cache management et reliability.
-- Développement d'une surcouche de pilotage de roadmap sur JIRA : progression des Epics, projection des dates d'atterrissage par la vélocité, statut On Track / At Risk / Off Track.
+- Conception et développement, en autonomie, d'une surcouche de pilotage de roadmap sur JIRA : progression des Epics, projection des dates d'atterrissage par la vélocité, statut On Track / At Risk / Off Track.
+- En parallèle du pilotage produit, développement en autonomie (« vibe coding » assisté par Claude Code) de user scripts qui automatisent et fluidifient mon quotidien et celui de mes collègues (gains de temps sur les tâches récurrentes de suivi et de qualification).
 - Structuration du cadre de delivery sur JIRA : taxonomie de statuts, automatisations, outillage de qualification (DoR, arbres de triage de bugs, grille de macro-sizing).
 - Interface clé entre tech, POs et business pour la cohérence produit des APIs et le planning cross-plateforme (web & app).
 
@@ -43,7 +44,7 @@ Product Manager avec plus de 7 ans d'expérience dans le digital, j'ai évolué 
 - Collaboration avec 5 devs/QA pour livrer une migration headless réussie et une réduction notable du temps de chargement.
 - Optimisation du cache et standardisation des composants JSON, facilitant la contribution des pages dans un CMS AEM.
 - Implication dans le RUN et traitement proactif des anomalies de production.
-- Développement d'un outil interne de test et debug des pages front-end, améliorant l'efficacité des QA et la qualité des livraisons.
+- Développement personnel, en autonomie, d'un outil interne de test et debug des pages front-end, améliorant l'efficacité des QA et la qualité des livraisons.
 
 `API Façade` · `AEM` · `JSON` · `Headless` · `Scrum`
 
@@ -122,7 +123,7 @@ Product Manager avec plus de 7 ans d'expérience dans le digital, j'ai évolué 
 
 Organisation de festivals (président de l'association Kancane) · Musique — passionné de Hi-Fi & Home Cinéma · Cinéma · Lecture de méthodes (Agile, communication, management) · Veille technologique · Sport (musculation, vélo)
 
-*Mis à jour le 2026-07-15.*
+*Mis à jour le 2026-07-20.*
 <!-- END:CV -->
 
 ---

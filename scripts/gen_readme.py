@@ -80,6 +80,9 @@ def build_summary(data: dict, lang: str) -> str:
 
     out.append(f"# {p['name']}")
     out.append("")
+    if p.get("page_url"):
+        out.append(f"Github Page : {p['page_url']}")
+        out.append("")
     out.append(f"**{tr(p['title'], lang)}**")
     out.append("")
     out.append(tr(p["summary"], lang).strip())
