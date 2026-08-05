@@ -354,3 +354,5 @@ interests:
   - { fr: "Sport (musculation, vélo)", en: "Sport (weight training, cycling)" }
   - { fr: "Bourse & marchés financiers", en: "Stock market & finance" }
   - { fr: "Actualités & géopolitique", en: "News & geopolitics" }
+  - { fr: "Projets IA personnels", en: "Personal AI projects" }
+  - { fr: "Configuration de serveur NAS à la maison", en: "Home NAS server configuration" }

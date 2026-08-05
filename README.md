@@ -121,7 +121,7 @@ Product Manager avec plus de 7 ans d'expérience dans le digital, j'ai évolué 
 
 ## Centres d'intérêt
 
-Organisation de festivals (président de l'association Kancane) · Musique — passionné de Hi-Fi & Home Cinéma · Cinéma · Lecture de méthodes (Agile, communication, management) · Veille technologique · Sport (musculation, vélo) · Bourse & marchés financiers · Actualités & géopolitique
+Organisation de festivals (président de l'association Kancane) · Musique — passionné de Hi-Fi & Home Cinéma · Cinéma · Lecture de méthodes (Agile, communication, management) · Veille technologique · Sport (musculation, vélo) · Bourse & marchés financiers · Actualités & géopolitique · Projets IA personnels · Configuration de serveur NAS à la maison
 
 *Mis à jour le 2026-07-20.*
 <!-- END:CV -->
